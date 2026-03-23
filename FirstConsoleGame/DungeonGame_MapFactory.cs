@@ -12,9 +12,9 @@ namespace FirstConsoleGame
 		{
 			entityManager = EntityManager.GetInstance();
 			GetMapTasks = new List<GetMapDelegate>();
-			GetMapTasks.Add(FillUpMap_Default);
-			GetMapTasks.Add(FillUpMap_Snake);
-			GetMapTasks.Add(FillUpMap_SnakeGrowUp);
+			//GetMapTasks.Add(FillUpMap_Default);
+			//GetMapTasks.Add(FillUpMap_Snake);
+			//GetMapTasks.Add(FillUpMap_SnakeGrowUp);
 			GetMapTasks.Add(FillUpMap_BigSnake);
 		}
 		public static DungeonGame_MapFactory GetInstance()

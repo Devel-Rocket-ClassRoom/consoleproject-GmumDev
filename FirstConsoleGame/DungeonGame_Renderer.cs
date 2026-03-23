@@ -24,6 +24,7 @@ namespace FirstConsoleGame
 		private MinimapRenderBox minimapBox;
 		private PlayerRenderBox playerbox;
 		private InputBox inputBox;
+		
 
 
 		// ----- Singleton + Constructor
@@ -80,12 +81,15 @@ namespace FirstConsoleGame
 		}
 
 		// ----- 
-		public void Draw(DungeonGame_Map map, int stage_num, string msg, int maxhp, int hp)
+		public void Update(DungeonGame_Map map, int stage_num, string msg, int maxhp, int hp)
 		{
 			mapbox.Update(map, stage_num);
 			msgbox.Update(msg);
 			minimapBox.Update(map);
 			playerbox.Update(maxhp, hp);
+		}
+		public void Draw()
+		{
 
 			foreach (RenderBox box in renderBoxs)
 				box.Render(buf);
@@ -103,10 +107,12 @@ namespace FirstConsoleGame
 			Console.SetCursorPosition(0, 0);
 			Console.WriteLine(outbuf);
 		}
+		public char[,] getBuf() { return buf; }
 		public void UpdateNewStage()
 		{
 			foreach (var box in renderBoxs)
 				box.Init();
 		}
+		
 	}
 }
