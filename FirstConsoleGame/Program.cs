@@ -1072,7 +1072,6 @@ namespace FirstConsoleGame
 		}
 		public class PlayerRenderBox : RenderBox
 		{
-
 			public PlayerRenderBox(MyVector size) : base(size) { }
 			public PlayerRenderBox(MyVector margin, MyVector size) : base(margin, size) { }
 			public void Update(int maxhp, int hp)
@@ -1133,6 +1132,15 @@ namespace FirstConsoleGame
 				DrawBorder(" [You]");
 			}
 		}
+		public class InputBox : RenderBox
+		{
+			public InputBox(MyVector size) : base(size) { }
+			public InputBox(MyVector margin, MyVector size) : base(margin, size) { }
+			public override void Init()
+			{
+				DrawBorder($" [Input]");
+			}
+		}
 		public class DungeonGame_Renderer
 		{
 			char[,] buf;
@@ -1143,13 +1151,15 @@ namespace FirstConsoleGame
 				Balloon,
 				Minimap,
 				Player,
+				Input,
 			};
-			private RenderBox[] renderBoxs = new RenderBox[4];
+			private RenderBox[] renderBoxs = new RenderBox[Enum.GetNames(typeof(RenderIndex)).Length];
 
 			private MapRenderBox mapbox;
 			private MsgRenderBox msgbox;
 			private MinimapRenderBox minimapBox;
 			private PlayerRenderBox playerbox;
+			private InputBox inputBox;
 
 
 			// ----- Singleton + Constructor
@@ -1172,18 +1182,20 @@ namespace FirstConsoleGame
 				renderBoxs[(int)RenderIndex.Minimap] = minimapBox;
 
 				margin = new MyVector(minimapBox.Margin.x + minimapBox.Size.x, minimapBox.Margin.y);
-				size = new MyVector((MAX_BUFFER_WIDTH - margin.x) / 4, minimapBox.Size.y);
-				playerbox = new PlayerRenderBox(margin, size);
-				renderBoxs[(int)RenderIndex.Player] = playerbox;
-
-				margin = new MyVector(playerbox.Margin.x + playerbox.Size.x, minimapBox.Margin.y);
 				size = new MyVector(MAX_BUFFER_WIDTH - margin.x, minimapBox.Size.y);
 				msgbox = new MsgRenderBox(margin, size);
 				renderBoxs[(int)RenderIndex.Balloon] = msgbox;
 
+				margin = new MyVector(minimapBox.Margin.x, minimapBox.Margin.y + minimapBox.Size.y);
+				size = new MyVector(minimapBox.Size.x, minimapBox.Size.y);
+				playerbox = new PlayerRenderBox(margin, size);
+				renderBoxs[(int)RenderIndex.Player] = playerbox;
 
-				//margin = new MyVector(minimapBox.Margin.x, minimapBox.Margin.y + minimapBox.Size.y);
-				//size = new MyVector(MAX_BUFFER_WIDTH - margin.x, MAX_BUFFER_HEIGHT - margin.y - 1);
+
+				margin = new MyVector(minimapBox.Margin.x, playerbox.Margin.y + playerbox.Size.y);
+				size = new MyVector(minimapBox.Size.x, MAX_BUFFER_HEIGHT - margin.y - 1);
+				inputBox = new InputBox(margin, size);
+				renderBoxs[(int)RenderIndex.Input] = inputBox;
 
 			}
 			public static DungeonGame_Renderer GetInstance(MyVector maxMapSize)
