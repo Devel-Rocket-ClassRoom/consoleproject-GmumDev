@@ -1,8 +1,10 @@
 ﻿
 namespace FirstConsoleGame
 {
+	// usage: new -> Init -> SetCallback -> ... -> LocalRender
 	public class AlertRenderBox : RenderBox
 	{
+
 		public delegate void InputCallback();
 		private Dictionary<char, (string, InputCallback)> inputCallbackDict;
 		private string title;
@@ -44,8 +46,8 @@ namespace FirstConsoleGame
 		{
 			int cnt = inputCallbackDict.Count;
 
-			int elemPerWidth = 2;
 			int elemWidth = 10;
+			int elemPerWidth = 3;
 			int elemHeight = 3;
 
 			int paddingx = (size.x / elemPerWidth) / 2 - elemWidth/2;
