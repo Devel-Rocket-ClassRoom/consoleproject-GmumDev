@@ -10,11 +10,12 @@ namespace FirstConsoleGame
 	public class DungeonGame
 	{
 		private static DungeonGame instance;
+
+		private AlertRenderer alertRenderer;
 		private DungeonGame_Renderer renderer;
 		private DungeonGame_StageFactory stageManager;
 		private DungeonGame_Map curMap;
 		private Player player;
-		private RenderBox gameoverBox;
 
 		private int curStage = 1;
 		private string msg = "Welcome to my dungeon game! Input your move and defeat every monster, then run out to doors!";
@@ -48,12 +49,29 @@ namespace FirstConsoleGame
 			player = (Player)EntityManager.GetInstance().GetNewInstance<Player>(new MyVector(1, 1));
 
 			stageManager = DungeonGame_StageFactory.GetInstance();
+
 			renderer = DungeonGame_Renderer.GetInstance(stageManager.MaxMapSize);
 
+			alertRenderer = AlertRenderer.GetInstance();
+			alertRenderer.alertGameoverBox.SetCallback('R', "Restart", () => RestartGame());
+			alertRenderer.alertGameoverBox.LocalRender();
+
+
+			StartInitialGame();
+		}
+		public void StartInitialGame()
+		{
+			SetNewStage();
+			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Draw();
+		}
+		public void RestartGame()
+		{
+			player.Init(new MyVector(1, 1));
 
 			SetNewStage();
-
-			renderer.Draw(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Draw();
 		}
 		private void SetNewStage()
 		{
@@ -99,11 +117,17 @@ namespace FirstConsoleGame
 
 			if (player.IsDead)
 			{
-
+				alertRenderer.alertGameoverBox.Alert();
 			}
-			renderer.Draw(curMap, curStage, msg, player.MaxHp, player.Hp);
 
+			alertRenderer.DrawAndSetCallbacks();
+			alertRenderer.DoCallbacks();
 
+			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Draw();
+
+			
+			
 			return true;
 		}
 	
