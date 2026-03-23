@@ -20,6 +20,7 @@ namespace FirstConsoleGame
 
 		public AlertRenderBox alertGameoverBox;
 		public AlertRenderBox alertDonateBox;
+		public AlertRenderBox alertShopBox;
 
 		private AlertRenderer()
 		{
@@ -29,11 +30,15 @@ namespace FirstConsoleGame
 
 			var margin = new MyVector(MAX_BUFFER_WIDTH / 2 - maxBufSize.x / 2, MAX_BUFFER_HEIGHT / 2 - maxBufSize.y / 2);
 			var size = maxBufSize;
+
 			alertGameoverBox = new AlertRenderBox(margin, size, "Game Over");
 			alertDonateBox = new AlertRenderBox(margin, size, "Donate");
-			boxes = new AlertRenderBox[2];
+			alertShopBox = new AlertRenderBox(margin, size, "Shop");
+
+			boxes = new AlertRenderBox[3];
 			boxes[0] = alertGameoverBox;
 			boxes[1] = alertDonateBox;
+			boxes[2] = alertShopBox;
 
 			alertedBox = new Queue<AlertRenderBox>();
 		}
