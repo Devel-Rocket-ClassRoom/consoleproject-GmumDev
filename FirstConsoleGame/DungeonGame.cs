@@ -7,6 +7,7 @@ using static FirstConsoleGame.Program;
 
 namespace FirstConsoleGame
 {
+	// some changes
 	public class DungeonGame
 	{
 		private static DungeonGame instance;
