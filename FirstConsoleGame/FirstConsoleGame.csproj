@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Program - backup_0316.cs" />
+    <Compile Remove="Program - backup_0318.cs" />
+    <Compile Remove="Program - backup_0319.cs" />
+    <Compile Remove="Program - backup_0320.cs" />
+    <Compile Remove="Program - 복사.cs" />
+  </ItemGroup>
+
+</Project>
