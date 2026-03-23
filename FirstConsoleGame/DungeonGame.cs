@@ -14,6 +14,7 @@ namespace FirstConsoleGame
 		private DungeonGame_StageFactory stageManager;
 		private DungeonGame_Map curMap;
 		private Player player;
+		private RenderBox gameoverBox;
 
 		private int curStage = 1;
 		private string msg = "Welcome to my dungeon game! Input your move and defeat every monster, then run out to doors!";
@@ -48,6 +49,7 @@ namespace FirstConsoleGame
 
 			stageManager = DungeonGame_StageFactory.GetInstance();
 			renderer = DungeonGame_Renderer.GetInstance(stageManager.MaxMapSize);
+
 
 			SetNewStage();
 
@@ -95,9 +97,16 @@ namespace FirstConsoleGame
 				curStage++;
 			}
 
+			if (player.IsDead)
+			{
+
+			}
 			renderer.Draw(curMap, curStage, msg, player.MaxHp, player.Hp);
+
 
 			return true;
 		}
+	
+		
 	}
 }
