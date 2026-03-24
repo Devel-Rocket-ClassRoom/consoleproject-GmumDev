@@ -1,0 +1,20 @@
+[
+	{
+		"name": "Potion",
+		"symbol": "8",
+		"price": 2,
+		"descript": "Healing potion. Gain 2 hp."
+	},
+	{
+		"name": "Small Potion",
+		"symbol": "6",
+		"price": 1,
+		"descript": "Healing potion. Gain 1 hp."
+	},
+	{
+		"name": "Big Potion",
+		"symbol": "9",
+		"price": 3,
+		"descript": "Healing potion. Gain 3 hp."
+	}
+]

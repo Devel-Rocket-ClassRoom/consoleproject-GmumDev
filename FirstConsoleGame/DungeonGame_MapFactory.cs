@@ -12,9 +12,9 @@ namespace FirstConsoleGame
 		{
 			entityManager = EntityManager.GetInstance();
 			GetMapTasks = new List<GetMapDelegate>();
-			//GetMapTasks.Add(FillUpMap_Default);
-			//GetMapTasks.Add(FillUpMap_Snake);
-			//GetMapTasks.Add(FillUpMap_SnakeGrowUp);
+			GetMapTasks.Add(FillUpMap_Default);
+			GetMapTasks.Add(FillUpMap_Snake);
+			GetMapTasks.Add(FillUpMap_SnakeGrowUp);
 			GetMapTasks.Add(FillUpMap_BigSnake);
 		}
 		public static DungeonGame_MapFactory GetInstance()
@@ -119,6 +119,17 @@ namespace FirstConsoleGame
 			foreach (var pos in healingPotionPos)
 			{
 				map.SetNewEntity<HealingPotion>(new MyVector(pos.Item1, pos.Item2));
+			}
+			HashSet<(int, int)> shopPos = new HashSet<(int, int)>();
+			GetRandomEmptyPos(map, ref shopPos, 1);
+			foreach (var pos in shopPos)
+			{
+				map.SetNewEntity<ItemShop>(new MyVector(pos.Item1, pos.Item2));
+				var shop = (ItemShop)map.GetEntity(pos.Item1, pos.Item2);
+				var itemdb = ItemDBContainer.GetInstance();
+				shop.SetItem(itemdb.GetShopItemData(ItemID.Potion, 1));
+				shop.SetItem(itemdb.GetShopItemData(ItemID.SmallPotion, 1));
+				shop.SetItem(itemdb.GetShopItemData(ItemID.BigPotion, 1));
 			}
 
 			map.UpdateMapData();
@@ -227,13 +238,14 @@ namespace FirstConsoleGame
 		}
 		private void GetRandomEmptyPos(DungeonGame_Map map, ref HashSet<(int, int)> visited, int cnt)
 		{
+			HashSet<MyVector> doors = map.GetDoorCardinalPlayerPos().ToHashSet();
 			while (cnt > 0)
 			{
 				int x = rand.Next() % map.size.x;
 				int y = rand.Next() % map.size.y;
-
+				
 				// cannot overlap. char c only set to ' ': empty space. 
-				if (map.GetEntity(x, y) is EmptyEntity)
+				if (map.GetEntity(x, y) is EmptyEntity && doors.Contains(new MyVector(x, y)) == false)
 				{
 					cnt--;
 					visited.Add((x, y));
