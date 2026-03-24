@@ -9,6 +9,20 @@ using static FirstConsoleGame.Utility;
 
 namespace FirstConsoleGame
 {
+	/*
+	
+	
+	Itemshop with AlertBoxes. 
+	Itemshop has 2 row * 3 col grid...
+	{{A G D}
+	{1 2 3}}
+	A and D is to select item 1, 2, 3
+	G to buy
+	Each selection(A, G, D) has and Invokes other alertBox. 
+
+	 
+	 
+	 */
 	public class ItemShop : Entity
 	{
 		private AlertRenderBox[] shopBox;

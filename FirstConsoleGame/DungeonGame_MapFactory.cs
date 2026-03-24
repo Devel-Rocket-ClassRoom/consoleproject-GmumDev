@@ -127,7 +127,7 @@ namespace FirstConsoleGame
 				map.SetNewEntity<ItemShop>(new MyVector(pos.Item1, pos.Item2));
 				var shop = (ItemShop)map.GetEntity(pos.Item1, pos.Item2);
 				shop.SetItem(new ItemData("potion", '8', 1, 1));
-				shop.SetItem(new ItemData("potto", '9', 1, 1));
+				shop.SetItem(new ItemData("drink", '6', 1, 1));
 				shop.SetItem(new ItemData("Soldout", '0', 0, 0));
 			}
 
@@ -237,13 +237,14 @@ namespace FirstConsoleGame
 		}
 		private void GetRandomEmptyPos(DungeonGame_Map map, ref HashSet<(int, int)> visited, int cnt)
 		{
+			HashSet<MyVector> doors = map.GetDoorCardinalPlayerPos().ToHashSet();
 			while (cnt > 0)
 			{
 				int x = rand.Next() % map.size.x;
 				int y = rand.Next() % map.size.y;
-
+				
 				// cannot overlap. char c only set to ' ': empty space. 
-				if (map.GetEntity(x, y) is EmptyEntity)
+				if (map.GetEntity(x, y) is EmptyEntity && doors.Contains(new MyVector(x, y)) == false)
 				{
 					cnt--;
 					visited.Add((x, y));
