@@ -7,7 +7,7 @@ namespace FirstConsoleGame
 
 		public delegate void InputCallback();
 		private Dictionary<char, (string, InputCallback)> inputCallbackDict;
-		private string title;
+		protected string title;
 
 		public bool alerted;
 		public AlertRenderBox(MyVector margin, MyVector size, string title) : base(margin, size)
@@ -43,13 +43,15 @@ namespace FirstConsoleGame
 
 			return inputCallbackDict[c].Item2;
 		}
+		protected virtual (int, int, int) GetElemAlignment()
+		{
+			return (10, 3, 3);
+		}
 		public void LocalRender()
 		{
 			int cnt = inputCallbackDict.Count;
 
-			int elemWidth = 10;
-			int elemPerWidth = 3;
-			int elemHeight = 3;
+			(int elemWidth, int elemHeight, int elemPerWidth) = GetElemAlignment();
 
 			int paddingx = (size.x / elemPerWidth) / 2 - elemWidth/2;
 			int paddingy = 2;
@@ -57,14 +59,15 @@ namespace FirstConsoleGame
 			for (int i = 0; i < cnt; i++)
 			{
 				string msg = inputCallbackDict[callbackChars[i]].Item1;
-				int x = paddingx + (size.x / elemPerWidth) * (i % elemPerWidth) + elemWidth/2 - msg.Length/2;
+				int min_x_offset = Math.Min(elemWidth / 2, msg.Length / 2);
+				int x = paddingx + (size.x / elemPerWidth) * (i % elemPerWidth) + elemWidth/2 - min_x_offset;
 				int y = paddingy + (i / elemPerWidth) * elemHeight;
 
 				int it = 0; // msg iterator
 
 
-				// draw key(input char)
-				buf[y, x + msg.Length/2 - 1] = callbackChars[i];
+				// draw symbol
+				buf[y, x + min_x_offset] = callbackChars[i];
 
 				// draw messages
 				for (int local_y = y + 1; local_y < y + elemHeight; local_y++)

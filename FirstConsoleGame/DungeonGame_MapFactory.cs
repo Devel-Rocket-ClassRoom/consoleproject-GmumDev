@@ -126,9 +126,10 @@ namespace FirstConsoleGame
 			{
 				map.SetNewEntity<ItemShop>(new MyVector(pos.Item1, pos.Item2));
 				var shop = (ItemShop)map.GetEntity(pos.Item1, pos.Item2);
-				shop.SetItem(new ItemData("potion", '8', 1, 1));
-				shop.SetItem(new ItemData("drink", '6', 1, 1));
-				shop.SetItem(new ItemData("Soldout", '0', 0, 0));
+				var itemdb = ItemDBContainer.GetInstance();
+				shop.SetItem(itemdb.GetShopItemData(ItemID.Potion, 1));
+				shop.SetItem(itemdb.GetShopItemData(ItemID.SmallPotion, 1));
+				shop.SetItem(itemdb.GetShopItemData(ItemID.BigPotion, 1));
 			}
 
 			map.UpdateMapData();

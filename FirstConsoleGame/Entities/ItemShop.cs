@@ -25,44 +25,46 @@ namespace FirstConsoleGame
 	 */
 	public class ItemShop : Entity
 	{
-		private AlertRenderBox[] shopBox;
+		private ShopAlertRenderBox[] shopBox;
 
 
 		private const int maxItemCnt = 3;
-		private ItemData[] items;
+		private ShopItemData[] items;
 		private int[] leftItemStock;
 		private int curItemCnt;
-		private string outputStr = "";
 
 		public override void Init(MyVector pos)
 		{
 			base.Init(pos);
 			symbol = 'S';
-			items = new ItemData[maxItemCnt];
+			items = new ShopItemData[maxItemCnt];
 			leftItemStock = new int[maxItemCnt];
 			curItemCnt = 0;
-			outputStr = "";
 
 			var margin = AlertRenderer.GetInstance().Margin;
 			var size = AlertRenderer.GetInstance().Size;
 
-			shopBox = new AlertRenderBox[3];
+			shopBox = new ShopAlertRenderBox[3];
 
-			shopBox[0] = new AlertRenderBox(margin, size, "Shop");
-			shopBox[1] = new AlertRenderBox(margin, size, "Shop");
-			shopBox[2] = new AlertRenderBox(margin, size, "Shop");
+			shopBox[0] = new ShopAlertRenderBox(margin, size, "Shop");
+			shopBox[1] = new ShopAlertRenderBox(margin, size, "Shop");
+			shopBox[2] = new ShopAlertRenderBox(margin, size, "Shop");
 
-			shopBox[0].SetCallback('A', "<", () => { });
-			shopBox[0].SetCallback('G', "---Buy---", BuyLeftItem);
-			shopBox[0].SetCallback('D', ">", ActivateMiddleShop);
+			string left = " Exit <-------";
+			string buy = " G to Buy";
+			string right = " -------> Exit";
 
-			shopBox[1].SetCallback('A', "<", ActivateLeftShop);
-			shopBox[1].SetCallback('G', "---Buy---", BuyMiddleItem);
-			shopBox[1].SetCallback('D', ">", ActivateRightShop);
+			shopBox[0].SetCallback('A', left, () => { });
+			shopBox[0].SetCallback('G', buy, BuyLeftItem);
+			shopBox[0].SetCallback('D', right, ActivateMiddleShop);
 
-			shopBox[2].SetCallback('A', "<", ActivateMiddleShop);
-			shopBox[2].SetCallback('G', "---Buy---", BuyRightItem);
-			shopBox[2].SetCallback('D', ">", () => { });
+			shopBox[1].SetCallback('A', left, ActivateLeftShop);
+			shopBox[1].SetCallback('G', buy, BuyMiddleItem);
+			shopBox[1].SetCallback('D', right, ActivateRightShop);
+
+			shopBox[2].SetCallback('A', left, ActivateMiddleShop);
+			shopBox[2].SetCallback('G', buy, BuyRightItem);
+			shopBox[2].SetCallback('D', right, () => { });
 
 		}
 
@@ -91,7 +93,7 @@ namespace FirstConsoleGame
 
 		private void BuyItem(int idx)
 		{
-			ItemData item = items[idx];
+			ShopItemData item = items[idx];
 			if (leftItemStock[idx] > 0)
 			{
 				// check player money
@@ -101,10 +103,11 @@ namespace FirstConsoleGame
 				{
 					for (int i = 0; i < 3; i++)
 					{
-						string msg = "  Soldout  ";
+						string msg = "Soldout";
 						if (i == idx)
-							msg = " >Soldout< ";
+							msg = ">Soldout<";
 						shopBox[i].SetCallback(item.symbol, msg, () => { });
+						shopBox[i].Redraw();
 					}
 				}
 				// reduce player money
@@ -124,29 +127,20 @@ namespace FirstConsoleGame
 		{
 			BuyItem(2);
 		}
-		public void SetItem(ItemData itemData)
+		public void SetItem(ShopItemData itemData)
 		{
 			if (curItemCnt > maxItemCnt - 1) return;
-
 
 			AlertRenderBox.InputCallback[] callback = [ActivateLeftShop, ActivateMiddleShop, ActivateRightShop];
 			for (int i = 0; i < 3; i++)
 			{
 				string name = itemData.name;
-				if(name == "Soldout")
-				{
-					if (i == curItemCnt)
-						name = $">{name}<";
-					shopBox[i].SetCallback(itemData.symbol, name, callback[curItemCnt]);
-				}
-				else
-				{
-					if (i == curItemCnt)
-						name = $">{name}<";
-					int price = itemData.price;
+				if (i == curItemCnt)
+					name = $">{name}<";
+				int price = itemData.price;
 
-					shopBox[i].SetCallback(itemData.symbol, $"{name} ${price}", callback[curItemCnt]);
-				}
+				shopBox[i].SetCallback(itemData.symbol, $"{name} ${price}", callback[curItemCnt]);
+				
 			}
 
 			items[curItemCnt] = itemData;

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FirstConsoleGame
 {
-	public readonly struct ItemData
+	public readonly struct ShopItemData
 	{
 		public readonly string name;
 		public readonly int price;
 		public readonly char symbol;
 		public readonly int count;
-		public ItemData(string name, char symbol, int price, int count)
+		public ShopItemData(string name, char symbol, int price, int count)
 		{
 			this.name = name;
 			this.symbol = symbol;
