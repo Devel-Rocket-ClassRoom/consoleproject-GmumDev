@@ -20,8 +20,6 @@ namespace FirstConsoleGame
 		private int curStage = 1;
 		private string msg = "Welcome to my dungeon game! Input your move and defeat every monster, then run out to doors!";
 
-		private bool isRunning = true;
-
 		// -----
 		private DungeonGame()
 		{
@@ -38,10 +36,10 @@ namespace FirstConsoleGame
 		}
 		public void Play()
 		{
-			isRunning = true;
+			bool isRunning = true;
 			while (isRunning)
 			{
-				Update();
+				isRunning = Update();
 			}
 		}
 
@@ -55,13 +53,8 @@ namespace FirstConsoleGame
 			renderer = DungeonGame_Renderer.GetInstance(stageManager.MaxMapSize);
 
 			alertRenderer = AlertRenderer.GetInstance();
-			alertRenderer.alertGameoverBox.SetCallback('R', "Restart", RestartGame);
-			alertRenderer.alertGameoverBox.SetCallback('Q', "Quit", () => isRunning = false);
-			alertRenderer.alertGameoverBox.SetCallback('D', "Donate", alertRenderer.alertDonateBox.Alert);
+			alertRenderer.alertGameoverBox.SetCallback('R', "Restart", () => RestartGame());
 			alertRenderer.alertGameoverBox.LocalRender();
-
-			alertRenderer.alertDonateBox.SetCallback('Q', "Thank you", alertRenderer.alertGameoverBox.Alert);
-			alertRenderer.alertDonateBox.LocalRender();
 
 
 			StartInitialGame();
@@ -99,11 +92,8 @@ namespace FirstConsoleGame
 
 			// --- Manage Input
 			char dir = Utility.InputSingleChar();
-			if (dir == 'Q')
-			{
-				isRunning = false;
-				return false;
-			}
+			if (dir == 'Q') return false;
+
 			// --- Get Next Move. 
 			MyVector tomove = player.GetMove(dir, curMap.size);
 			MyVector deltaMove = new MyVector(tomove.x - player.pos.x, tomove.y - player.pos.y);
@@ -130,17 +120,8 @@ namespace FirstConsoleGame
 				alertRenderer.alertGameoverBox.Alert();
 			}
 
-
-			do
-			{
-				// enqueue callback of alert with user selection
-				alertRenderer.DrawAndSetCallbacks();
-
-				// do callbacks
-				alertRenderer.DoCallbacks();
-
-				// some alerts can be invoked by other alerts. so check again. 
-			} while (alertRenderer.UpdateAlertedCnt() > 0);
+			alertRenderer.DrawAndSetCallbacks();
+			alertRenderer.DoCallbacks();
 
 			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
 			renderer.Draw();

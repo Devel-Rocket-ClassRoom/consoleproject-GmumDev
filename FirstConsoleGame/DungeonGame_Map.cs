@@ -126,16 +126,6 @@ namespace FirstConsoleGame
 
 			return doorPosDatas;
 		}
-		public MyVector[] GetDoorCardinalPlayerPos()
-		{
-			MyVector[] doorPosDatas = new MyVector[4];
-			doorPosDatas[(int)DirIndex.Left] = new MyVector(1, size.y / 2);
-			doorPosDatas[(int)DirIndex.Right] = new MyVector(size.x - 2, size.y / 2);
-			doorPosDatas[(int)DirIndex.Up] = new MyVector(size.x / 2, 1);
-			doorPosDatas[(int)DirIndex.Down] = new MyVector(size.x / 2, size.y - 2);
-
-			return doorPosDatas;
-		}
 		public Door GetDoor(DirIndex dir)
 		{
 			MyVector pos = GetDoorCardinalPos()[(int)dir];
