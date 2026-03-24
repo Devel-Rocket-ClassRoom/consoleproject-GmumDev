@@ -13,17 +13,18 @@ namespace FirstConsoleGame
 		public AlertRenderBox(MyVector margin, MyVector size, string title) : base(margin, size)
 		{
 			this.title = title;
-			Init();
+			DrawBorder($" [{title}]");
 		}
 		public void SetCallback(char input_char, string msg, InputCallback callback)
 		{
-			if(inputCallbackDict.Keys.Contains(input_char) == false)
+			if (inputCallbackDict.Keys.Contains(input_char) == false)
 				inputCallbackDict.Add(char.ToUpper(input_char), (msg, callback));
+			else
+				inputCallbackDict[char.ToUpper(input_char)] = (msg, callback);
 		}
 		public override void Init()
 		{
 			inputCallbackDict = new Dictionary<char, (string, InputCallback)>();
-			DrawBorder($" [{title}]");
 			alerted = false;
 		}
 

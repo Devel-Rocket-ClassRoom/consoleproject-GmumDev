@@ -20,7 +20,16 @@ namespace FirstConsoleGame
 
 		public AlertRenderBox alertGameoverBox;
 		public AlertRenderBox alertDonateBox;
-		public AlertRenderBox alertShopBox;
+		private AlertRenderBox alertShopBox;
+
+		private MyVector margin;
+		private MyVector size;
+		public MyVector Margin { get => margin; }
+		public MyVector Size { get => size; }
+		public AlertRenderBox AlertShopBox
+		{
+			set => (alertShopBox, boxes[2]) = (value, value);
+		}
 
 		private AlertRenderer()
 		{
@@ -28,8 +37,8 @@ namespace FirstConsoleGame
 			buf = new char[maxBufSize.y, maxBufSize.x];
 			callbacks = new Queue<AlertRenderBox.InputCallback>();
 
-			var margin = new MyVector(MAX_BUFFER_WIDTH / 2 - maxBufSize.x / 2, MAX_BUFFER_HEIGHT / 2 - maxBufSize.y / 2);
-			var size = maxBufSize;
+			margin = new MyVector(MAX_BUFFER_WIDTH / 2 - maxBufSize.x / 2, MAX_BUFFER_HEIGHT / 2 - maxBufSize.y / 2);
+			size = maxBufSize;
 
 			alertGameoverBox = new AlertRenderBox(margin, size, "Game Over");
 			alertDonateBox = new AlertRenderBox(margin, size, "Donate");

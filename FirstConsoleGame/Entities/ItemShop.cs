@@ -1,6 +1,7 @@
-﻿using FirstConsoleGame.Structs;
+﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace FirstConsoleGame
 		private ItemData[] items;
 		private int[] leftItemStock;
 		private int curItemCnt;
+		private string outputStr = "";
+
 		public override void Init(MyVector pos)
 		{
 			base.Init(pos);
@@ -24,9 +27,10 @@ namespace FirstConsoleGame
 			items = new ItemData[maxItemCnt];
 			leftItemStock = new int[maxItemCnt];
 			curItemCnt = 0;
+			outputStr = "";
 
-			var margin = new MyVector(MAX_BUFFER_WIDTH / 8, MAX_BUFFER_HEIGHT / 6);
-			var size = new MyVector(MAX_BUFFER_WIDTH - margin.x * 2, MAX_BUFFER_HEIGHT - margin.y * 2);
+			var margin = AlertRenderer.GetInstance().Margin;
+			var size = AlertRenderer.GetInstance().Size;
 
 			shopBox = new AlertRenderBox[3];
 
@@ -45,63 +49,90 @@ namespace FirstConsoleGame
 			shopBox[2].SetCallback('A', "<", ActivateMiddleShop);
 			shopBox[2].SetCallback('G', "---Buy---", BuyRightItem);
 			shopBox[2].SetCallback('D', ">", () => { });
+
 		}
 
+		public void LocalRender()
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				shopBox[i].LocalRender();
+			}
+		}
 		private void ActivateLeftShop()
 		{
-			AlertRenderer.GetInstance().alertShopBox = shopBox[0];
+			AlertRenderer.GetInstance().AlertShopBox = shopBox[0];
 			shopBox[0].Alert();
 		}
 		private void ActivateMiddleShop()
 		{
-			AlertRenderer.GetInstance().alertShopBox = shopBox[1];
+			AlertRenderer.GetInstance().AlertShopBox = shopBox[1];
 			shopBox[1].Alert();
 		}
 		private void ActivateRightShop()
 		{
-			AlertRenderer.GetInstance().alertShopBox = shopBox[2];
+			AlertRenderer.GetInstance().AlertShopBox = shopBox[2];
 			shopBox[2].Alert();
 		}
 
-		private void BuyLeftItem()
+		private void BuyItem(int idx)
 		{
-			if (leftItemStock[0] > 0)
+			ItemData item = items[idx];
+			if (leftItemStock[idx] > 0)
 			{
 				// check player money
 
-				ItemData item = items[0];
-				leftItemStock[0]--;
+				leftItemStock[idx]--;
+				if (leftItemStock[idx] <= 0)
+				{
+					for (int i = 0; i < 3; i++)
+					{
+						string msg = "  Soldout  ";
+						if (i == idx)
+							msg = " >Soldout< ";
+						shopBox[i].SetCallback(item.symbol, msg, () => { });
+					}
+				}
 				// reduce player money
-
 
 				// add item to player inventory
 			}
-			
-			shopBox[0].Alert();
+		}
+		private void BuyLeftItem()
+		{
+			BuyItem(0);
 		}
 		private void BuyMiddleItem()
 		{
-
-			shopBox[1].Alert();
+			BuyItem(1);
 		}
 		private void BuyRightItem()
 		{
-
-			shopBox[2].Alert();
+			BuyItem(2);
 		}
-		public void SetItems(ItemData itemData)
+		public void SetItem(ItemData itemData)
 		{
 			if (curItemCnt > maxItemCnt - 1) return;
 
 
-			for(int i = 0; i < 3; i++)
+			AlertRenderBox.InputCallback[] callback = [ActivateLeftShop, ActivateMiddleShop, ActivateRightShop];
+			for (int i = 0; i < 3; i++)
 			{
 				string name = itemData.name;
-				if (i == curItemCnt) 
-					name = $">{name}<";
-				int price = itemData.price;
-				// if player press symbol char, then activate middle shop. is just not to quit shop. 
-				shopBox[i].SetCallback(itemData.symbol, $"{name} {price}\\", ActivateMiddleShop);
+				if(name == "Soldout")
+				{
+					if (i == curItemCnt)
+						name = $">{name}<";
+					shopBox[i].SetCallback(itemData.symbol, name, callback[curItemCnt]);
+				}
+				else
+				{
+					if (i == curItemCnt)
+						name = $">{name}<";
+					int price = itemData.price;
+
+					shopBox[i].SetCallback(itemData.symbol, $"{name} ${price}", callback[curItemCnt]);
+				}
 			}
 
 			items[curItemCnt] = itemData;
@@ -114,10 +145,11 @@ namespace FirstConsoleGame
 			MyVector playerPos = new MyVector(mapdata["player_x"], mapdata["player_y"]);
 			Player player = (Player)map.GetEntity(playerPos.x, playerPos.y);
 
-			AlertRenderer.GetInstance().alertShopBox = shopBox[1];
-			shopBox[1].Alert();
+			LocalRender();
 
-			return "You bought something!";
+			ActivateMiddleShop();
+
+			return $"Thanks!";
 		}
 	}
 }

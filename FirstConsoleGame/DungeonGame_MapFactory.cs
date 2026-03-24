@@ -120,6 +120,16 @@ namespace FirstConsoleGame
 			{
 				map.SetNewEntity<HealingPotion>(new MyVector(pos.Item1, pos.Item2));
 			}
+			HashSet<(int, int)> shopPos = new HashSet<(int, int)>();
+			GetRandomEmptyPos(map, ref shopPos, 1);
+			foreach (var pos in shopPos)
+			{
+				map.SetNewEntity<ItemShop>(new MyVector(pos.Item1, pos.Item2));
+				var shop = (ItemShop)map.GetEntity(pos.Item1, pos.Item2);
+				shop.SetItem(new ItemData("potion", '8', 1, 1));
+				shop.SetItem(new ItemData("potto", '9', 1, 1));
+				shop.SetItem(new ItemData("Soldout", '0', 0, 0));
+			}
 
 			map.UpdateMapData();
 		}

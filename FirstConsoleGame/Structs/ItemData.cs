@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstConsoleGame.Structs
+namespace FirstConsoleGame
 {
 	public readonly struct ItemData
 	{
