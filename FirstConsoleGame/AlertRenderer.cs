@@ -11,21 +11,45 @@ namespace FirstConsoleGame
 		MyVector maxBufSize;
 		char[,] buf;
 
-		private AlertRenderBox[] alertBoxs = new AlertRenderBox[1];
-		public AlertRenderBox alertGameoverBox;
-
+		// all boxes
+		private AlertRenderBox[] boxes;
+		
+		// que to do alert, do callbacks. 
+		private Queue<AlertRenderBox> alertedBox;
 		private Queue<AlertRenderBox.InputCallback> callbacks;
+
+		public AlertRenderBox alertGameoverBox;
+		public AlertRenderBox alertDonateBox;
+		private AlertRenderBox alertShopBox;
+
+		private MyVector margin;
+		private MyVector size;
+		public MyVector Margin { get => margin; }
+		public MyVector Size { get => size; }
+		public AlertRenderBox AlertShopBox
+		{
+			set => (alertShopBox, boxes[2]) = (value, value);
+		}
+
 		private AlertRenderer()
 		{
 			maxBufSize = new MyVector(MAX_BUFFER_WIDTH / 4, MAX_BUFFER_HEIGHT / 4);
 			buf = new char[maxBufSize.y, maxBufSize.x];
 			callbacks = new Queue<AlertRenderBox.InputCallback>();
 
-			var margin = new MyVector(MAX_BUFFER_WIDTH / 2 - maxBufSize.x / 2, MAX_BUFFER_HEIGHT / 2 - maxBufSize.y / 2);
-			var size = maxBufSize;
-			alertGameoverBox = new AlertRenderBox(margin, size, "Game Over");
+			margin = new MyVector(MAX_BUFFER_WIDTH / 2 - maxBufSize.x / 2, MAX_BUFFER_HEIGHT / 2 - maxBufSize.y / 2);
+			size = maxBufSize;
 
-			alertBoxs[0] = alertGameoverBox;
+			alertGameoverBox = new AlertRenderBox(margin, size, "Game Over");
+			alertDonateBox = new AlertRenderBox(margin, size, "Donate");
+			alertShopBox = new AlertRenderBox(margin, size, "Shop");
+
+			boxes = new AlertRenderBox[3];
+			boxes[0] = alertGameoverBox;
+			boxes[1] = alertDonateBox;
+			boxes[2] = alertShopBox;
+
+			alertedBox = new Queue<AlertRenderBox>();
 		}
 		private static AlertRenderer instance;
 		public static AlertRenderer GetInstance()
@@ -36,33 +60,40 @@ namespace FirstConsoleGame
 			return instance;
 		}
 	
+		public int UpdateAlertedCnt()
+		{
+			foreach(AlertRenderBox box in boxes)
+			{
+				if (box.alerted) alertedBox.Enqueue(box);
+			}
+			return alertedBox.Count;
+		}
 		public void DrawAndSetCallbacks()
 		{
-			foreach(AlertRenderBox box in alertBoxs)
+			while(alertedBox.Count > 0)
 			{
-				if(box.alerted)
+				var box = alertedBox.Dequeue();
+
+				box.alerted = false;
+				box.Render(buf);
+
+				for (int row = 0; row < box.Size.y; row++)
 				{
-					box.alerted = false;
-					box.Render(buf);
-
-					for (int row = 0; row < box.Size.y; row++)
+					StringBuilder outbuf = new StringBuilder("");
+					for (int col = 0; col < box.Size.x; col++)
 					{
-						StringBuilder outbuf = new StringBuilder("");
-						for (int col = 0; col < box.Size.x; col++)
-						{
-							outbuf.Append(buf[row, col]);
-						}
-						Console.SetCursorPosition(box.Margin.x, box.Margin.y + row);
-						Console.WriteLine(outbuf);
+						outbuf.Append(buf[row, col]);
 					}
-
-					callbacks.Enqueue(box.AlertGetCallbackByInput());
+					Console.SetCursorPosition(box.Margin.x, box.Margin.y + row);
+					Console.WriteLine(outbuf);
 				}
+
+				callbacks.Enqueue(box.GetCallbackByInput());
 			}
 		}
 		public void DoCallbacks()
 		{
-			while(callbacks.Count > 0)
+			while (callbacks.Count > 0)
 			{
 				callbacks.Dequeue()();
 			}
