@@ -14,6 +14,11 @@ namespace FirstConsoleGame
 		string[,] itemNameInventory = new string[elemRow, elemCol];
 		int[,] itemCntInventory = new int[elemRow, elemCol];
 
+		MyVector gridPadding;
+		MyVector gridSize;
+		MyVector descriptPadding;
+		MyVector descriptSize;
+
 		// [elem name]
 		// symbol cnt
 		// description
@@ -24,21 +29,29 @@ namespace FirstConsoleGame
 		public override void Init()
 		{
 			DrawBorder(" [Inventory]");
+			gridPadding = new MyVector(1, 1);
+			descriptPadding = new MyVector(1, 1);
+			descriptSize = new MyVector(size.x - descriptPadding.x * 2, 5 - descriptPadding.y*2);
+			gridSize = new MyVector(size.x - gridPadding.x * 2, size.y - gridPadding.y * 2 - descriptSize.y - descriptPadding.y * 2);
+		}
+		private void DrawGrid()
+		{
+			for(int r = gridPadding.y; r < gridSize.y; r++)
+			{
+				for(int c = gridPadding.x; c < gridSize.x; c++)
+				{
+
+				}
+			}
 		}
 		public void Update()
 		{
 
 		}
-		public void AddItem(string name, int cnt)
+		public void AddItem(ItemID id)
 		{
-
-		}
-		public override void Render(char[,] parentbuf)
-		{
-			int divx = size.x / elemCol;
-			int divy = size.y / elemRow;
- 
-
+			var item = ItemDBContainer.GetInstance().GetItemDataById(id);
+			
 		}
 
 	}

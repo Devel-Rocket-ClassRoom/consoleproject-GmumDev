@@ -16,6 +16,7 @@ namespace FirstConsoleGame
 			Minimap,
 			Player,
 			Input,
+			Inventory,
 		};
 		private RenderBox[] renderBoxs = new RenderBox[Enum.GetNames(typeof(RenderIndex)).Length];
 
@@ -23,6 +24,7 @@ namespace FirstConsoleGame
 		private MsgRenderBox msgbox;
 		private MinimapRenderBox minimapBox;
 		private PlayerRenderBox playerbox;
+		private InventoryBox inventorybox;
 		private InputBox inputBox;
 		
 
@@ -61,6 +63,13 @@ namespace FirstConsoleGame
 			size = new MyVector(minimapBox.Size.x, MAX_BUFFER_HEIGHT - margin.y - 1);
 			inputBox = new InputBox(margin, size);
 			renderBoxs[(int)RenderIndex.Input] = inputBox;
+
+
+			margin = new MyVector(msgbox.Margin.x, playerbox.Margin.y);
+			size = new MyVector(msgbox.Size.x, MAX_BUFFER_HEIGHT - margin.y - 1);
+			inventorybox = new InventoryBox(margin, size);
+			renderBoxs[(int)RenderIndex.Inventory] = inventorybox;
+
 
 		}
 		public static DungeonGame_Renderer GetInstance(MyVector maxMapSize)
