@@ -26,6 +26,10 @@ namespace FirstConsoleGame
 					}
 				}
 			}
+			DrawBorder();
+		}
+		public override void DrawBorder()
+		{
 			DrawBorder(" [Mini Map]");
 		}
 		public void Update(DungeonGame_Map curmap)
@@ -83,6 +87,8 @@ namespace FirstConsoleGame
 					parentbuf[global_y, global_x] = buf[local_y, local_x];
 				}
 			}
+
+
 		}
 	}
 }

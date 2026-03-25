@@ -52,6 +52,7 @@ namespace FirstConsoleGame
 				}
 			}
 		}
+		public abstract void DrawBorder();
 		protected void DrawBorder(string str)
 		{
 			for (int i = 0; i < size.y; i++)

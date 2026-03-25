@@ -64,9 +64,13 @@ namespace FirstConsoleGame
 				}
 			}
 		}
-		public override void Init()
+		public override void DrawBorder()
 		{
 			DrawBorder(" [You]");
+		}
+		public override void Init()
+		{
+			DrawBorder();
 		}
 	}
 }

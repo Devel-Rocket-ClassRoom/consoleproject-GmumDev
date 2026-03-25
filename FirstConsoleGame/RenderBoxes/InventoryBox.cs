@@ -28,11 +28,16 @@ namespace FirstConsoleGame
 		public InventoryBox(MyVector margin, MyVector size) : base(margin, size) { }
 		public override void Init()
 		{
-			DrawBorder(" [Inventory]");
 			gridPadding = new MyVector(1, 1);
 			descriptPadding = new MyVector(1, 1);
 			descriptSize = new MyVector(size.x - descriptPadding.x * 2, 5 - descriptPadding.y*2);
 			gridSize = new MyVector(size.x - gridPadding.x * 2, size.y - gridPadding.y * 2 - descriptSize.y - descriptPadding.y * 2);
+
+			DrawBorder();
+		}
+		public override void DrawBorder()
+		{
+			DrawBorder(" [Inventory]");
 		}
 		private void DrawGrid()
 		{

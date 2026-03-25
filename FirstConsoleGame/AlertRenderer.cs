@@ -19,6 +19,7 @@ namespace FirstConsoleGame
 		private Queue<AlertRenderBox.InputCallback> callbacks;
 
 		public AlertRenderBox alertGameoverBox;
+		public AlertRenderBox alertSaveLoadBox;
 		public AlertRenderBox alertDonateBox;
 		private AlertRenderBox alertShopBox;
 
@@ -42,14 +43,17 @@ namespace FirstConsoleGame
 
 			alertGameoverBox = new AlertRenderBox(margin, size, "Game Over");
 			alertDonateBox = new AlertRenderBox(margin, size, "Donate");
+			alertSaveLoadBox = new AlertRenderBox(margin, size, "Paused");
 			alertShopBox = new AlertRenderBox(margin, size, "Shop");
 
-			boxes = new AlertRenderBox[3];
+			boxes = new AlertRenderBox[4];
 			boxes[0] = alertGameoverBox;
 			boxes[1] = alertDonateBox;
 			boxes[2] = alertShopBox;
+			boxes[3] = alertSaveLoadBox;
 
 			alertedBox = new Queue<AlertRenderBox>();
+
 		}
 		private static AlertRenderer instance;
 		public static AlertRenderer GetInstance()

@@ -1,4 +1,5 @@
-﻿using static FirstConsoleGame.Utility;
+﻿using System.Data;
+using static FirstConsoleGame.Utility;
 
 namespace FirstConsoleGame
 {
@@ -162,30 +163,8 @@ namespace FirstConsoleGame
 				}
 			}
 
-			foreach (var pos in mainPaths)
-			{
-				DungeonGame_Map curmap = mapGrid[pos.y, pos.x];
-				foreach (DirIndex dir in Enum.GetValues<DirIndex>())
-				{
-					MyVector nearbyPos = pos + Utility.dirToDeltaPos[dir];
-					if (gridSize.IsOutOfSquare(nearbyPos)) continue;
-					DungeonGame_Map targetmap = mapGrid[nearbyPos.y, nearbyPos.x];
-					if (targetmap != null)
-					{
-						curmap.SetDoorAndConnectTo(dir, targetmap);
-					}
-				}
-
-				if (pos.x == startPos.x && pos.y == startPos.y)
-					mapFactory.FillUpMap_Start(curmap);
-				else if (pos.x == endPos.x && pos.y == endPos.y)
-					mapFactory.FillUpMap_End(curmap);
-				else
-				{
-					int randvar = rand.Next() % mapFactory.GetMapTasks.Count;
-					mapFactory.GetMapTasks[randvar](curmap);
-				}
-			}
+			SetDoorsWithPath(mainPaths);
+			RandomlyFillUpMaps(mainPaths);
 
 			IsClear = () =>
 			{
@@ -201,6 +180,75 @@ namespace FirstConsoleGame
 				}
 				return flag;
 			};
+		}
+		public void SetNewStageWithRawData(RawStageData data)
+		{
+			mapGrid = new DungeonGame_Map[GRID_HEIGHT, GRID_WIDTH];
+
+			HashSet<MyVector> mainPaths = new HashSet<MyVector>();
+
+			foreach (var mapdata in data.mapdatas)
+			{
+				if (mapdata.isEndMap) endPos = new MyVector(mapdata.gridx, mapdata.gridy);
+				else if (mapdata.isStartMap) startPos = new MyVector(mapdata.gridx, mapdata.gridy);
+				
+				mapGrid[mapdata.gridy, mapdata.gridx] = RawDataParser.GetMapFromRawData(mapdata);
+				mainPaths.Add(new MyVector(mapdata.gridx, mapdata.gridy));
+			}
+
+			SetDoorsWithPath(mainPaths);
+			// dont fill up maps. since, map already filled with RawData.
+			// dont resolve below comment
+			// RandomlyFillUpMaps(mainPaths);
+
+			IsClear = () =>
+			{
+				bool flag = true;
+				for (int i = 0; i < gridSize.y; i++)
+				{
+					for (int j = 0; j < gridSize.x; j++)
+					{
+						if (mapGrid[i, j] == null) continue;
+
+						flag = flag && mapGrid[i, j].IsClear();
+					}
+				}
+				return flag;
+			};
+		}
+		private void RandomlyFillUpMaps(HashSet<MyVector> mainPaths)
+		{
+			foreach (var pos in mainPaths)
+			{
+				DungeonGame_Map curmap = mapGrid[pos.y, pos.x];
+
+				if (pos.x == startPos.x && pos.y == startPos.y)
+					mapFactory.FillUpMap_Start(curmap);
+				else if (pos.x == endPos.x && pos.y == endPos.y)
+					mapFactory.FillUpMap_End(curmap);
+				else
+				{
+					int randomValue = rand.Next() % mapFactory.FillUpMapTasks.Count;
+					mapFactory.FillUpMapTasks[randomValue](curmap);
+				}
+			}
+		}
+		private void SetDoorsWithPath(HashSet<MyVector> mainPaths)
+		{
+			foreach (var pos in mainPaths)
+			{
+				DungeonGame_Map curmap = mapGrid[pos.y, pos.x];
+				foreach (DirIndex dir in Enum.GetValues<DirIndex>())
+				{
+					MyVector nearbyPos = pos + Utility.dirToDeltaPos[dir];
+					if (gridSize.IsOutOfSquare(nearbyPos)) continue;
+					DungeonGame_Map targetmap = mapGrid[nearbyPos.y, nearbyPos.x];
+					if (targetmap != null)
+					{
+						curmap.SetDoorAndConnectTo(dir, targetmap);
+					}
+				}
+			}
 		}
 	}
 }

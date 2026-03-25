@@ -15,6 +15,8 @@ namespace FirstConsoleGame
 		// ----- map data
 		private Entity[,] buf;
 		public MyVector size;
+		public bool isStartMap;
+		public bool isEndMap;
 
 		Dictionary<string, int> mapData = new Dictionary<string, int>();
 
@@ -177,6 +179,5 @@ namespace FirstConsoleGame
 			}
 			buf[player.pos.y, player.pos.x] = player;
 		}
-
 	}
 }

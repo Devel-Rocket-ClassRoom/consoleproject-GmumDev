@@ -23,6 +23,10 @@ namespace FirstConsoleGame
 			hp = 3;
 			isDead = false;
 		}
+		public void InitWithRawData(RawPlayerData data)
+		{
+			hp = data.hp;
+		}
 		public void TakeDamage(int damage)
 		{
 			hp -= damage;

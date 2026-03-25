@@ -13,6 +13,10 @@ namespace FirstConsoleGame
 		public AlertRenderBox(MyVector margin, MyVector size, string title) : base(margin, size)
 		{
 			this.title = title;
+			DrawBorder();
+		}
+		public override void DrawBorder()
+		{
 			DrawBorder($" [{title}]");
 		}
 		public void SetCallback(char input_char, string msg, InputCallback callback)

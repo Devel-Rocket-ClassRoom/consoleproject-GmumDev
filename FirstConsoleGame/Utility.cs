@@ -57,12 +57,13 @@ namespace FirstConsoleGame
 		}
 		public static void SaveData(object data, string path)
 		{
+			
 			string result = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-			File.WriteAllText("../../../Jsons/" + path, result);
+			File.WriteAllText(Path.Combine("../../../Jsons/", path), result);
 		}
 		public static T LoadData<T>(string path)
 		{
-			string s = File.ReadAllText("../../../Jsons/" + path);
+			string s = File.ReadAllText(Path.Combine("../../../Jsons/", path));
 			var obj = JsonSerializer.Deserialize<T>(s);
 			return obj;
 		}

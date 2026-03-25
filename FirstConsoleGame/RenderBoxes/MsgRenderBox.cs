@@ -8,10 +8,17 @@ namespace FirstConsoleGame
 		public MsgRenderBox(MyVector size) : base(size) { }
 		public MsgRenderBox(MyVector margin, MyVector size) : base(margin, size) { }
 
-		public override void Init() { DrawBorder(" [Text]"); }
+		public override void Init()
+		{
+			DrawBorder();
+		}
 		public void Update(string msg)
 		{
 			this.msg = msg;
+		}
+		public override void DrawBorder()
+		{
+			DrawBorder(" [Text]");
 		}
 		public override void Render(char[,] parentbuf)
 		{

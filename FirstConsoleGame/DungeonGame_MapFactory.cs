@@ -11,11 +11,11 @@ namespace FirstConsoleGame
 		private DungeonGame_MapFactory()
 		{
 			entityManager = EntityManager.GetInstance();
-			GetMapTasks = new List<GetMapDelegate>();
-			GetMapTasks.Add(FillUpMap_Default);
-			GetMapTasks.Add(FillUpMap_Snake);
-			GetMapTasks.Add(FillUpMap_SnakeGrowUp);
-			GetMapTasks.Add(FillUpMap_BigSnake);
+			FillUpMapTasks = new List<FillUpMapDelegate>();
+			FillUpMapTasks.Add(FillUpMap_Default);
+			FillUpMapTasks.Add(FillUpMap_Snake);
+			FillUpMapTasks.Add(FillUpMap_SnakeGrowUp);
+			FillUpMapTasks.Add(FillUpMap_BigSnake);
 		}
 		public static DungeonGame_MapFactory GetInstance()
 		{
@@ -27,8 +27,8 @@ namespace FirstConsoleGame
 			return instance;
 		}
 
-		public delegate void GetMapDelegate(DungeonGame_Map map);
-		public List<GetMapDelegate> GetMapTasks;
+		public delegate void FillUpMapDelegate(DungeonGame_Map map);
+		public List<FillUpMapDelegate> FillUpMapTasks;
 
 		// -----
 		public DungeonGame_Map GetEmptyMap(MyVector mapSize, MyVector gridPos)
@@ -114,6 +114,7 @@ namespace FirstConsoleGame
 		public void FillUpMap_Start(DungeonGame_Map map)
 		{
 			map.IsClear = () => true;
+			map.isStartMap = true;
 			HashSet<(int, int)> healingPotionPos = new HashSet<(int, int)>();
 			GetRandomEmptyPos(map, ref healingPotionPos, 1);
 			foreach (var pos in healingPotionPos)
@@ -137,6 +138,7 @@ namespace FirstConsoleGame
 		public void FillUpMap_End(DungeonGame_Map map)
 		{
 			map.IsClear = () => true;
+			map.isEndMap = true;
 			HashSet<(int, int)> healingPotionPos = new HashSet<(int, int)>();
 			GetRandomEmptyPos(map, ref healingPotionPos, 2);
 			foreach (var pos in healingPotionPos)
@@ -243,7 +245,7 @@ namespace FirstConsoleGame
 			{
 				int x = rand.Next() % map.size.x;
 				int y = rand.Next() % map.size.y;
-				
+
 				// cannot overlap. char c only set to ' ': empty space. 
 				if (map.GetEntity(x, y) is EmptyEntity && doors.Contains(new MyVector(x, y)) == false)
 				{

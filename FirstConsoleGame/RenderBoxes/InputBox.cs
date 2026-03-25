@@ -12,6 +12,11 @@ namespace FirstConsoleGame
 		public InputBox(MyVector margin, MyVector size) : base(margin, size) { }
 		public override void Init()
 		{
+
+			DrawBorder();
+		}
+		public override void DrawBorder()
+		{
 			DrawBorder($" [Input]");
 		}
 	}
