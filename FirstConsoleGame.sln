@@ -1,18 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4
+VisualStudioVersion = 17.14.37012.4 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstConsoleGame", "FirstConsoleGame\FirstConsoleGame.csproj", "{1563F382-CA79-4016-B615-50DFA797AE65}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backups", "Backups", "{C8D5274F-AC00-46C7-1F8D-E88E81087A52}"
-	ProjectSection(SolutionItems) = preProject
-		FirstConsoleGame\Program - backup_0316.cs = FirstConsoleGame\Program - backup_0316.cs
-		FirstConsoleGame\Program - backup_0318.cs = FirstConsoleGame\Program - backup_0318.cs
-		FirstConsoleGame\Program - backup_0319.cs = FirstConsoleGame\Program - backup_0319.cs
-		FirstConsoleGame\Program - backup_0320.cs = FirstConsoleGame\Program - backup_0320.cs
-		FirstConsoleGame\Program.cs = FirstConsoleGame\Program.cs
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstConsoleGame", "FirstConsoleGame\FirstConsoleGame.csproj", "{B200E29C-0FAF-4707-9F4F-541E80CF674E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1563F382-CA79-4016-B615-50DFA797AE65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1563F382-CA79-4016-B615-50DFA797AE65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1563F382-CA79-4016-B615-50DFA797AE65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1563F382-CA79-4016-B615-50DFA797AE65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B200E29C-0FAF-4707-9F4F-541E80CF674E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B200E29C-0FAF-4707-9F4F-541E80CF674E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B200E29C-0FAF-4707-9F4F-541E80CF674E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B200E29C-0FAF-4707-9F4F-541E80CF674E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4717297A-0AC8-4915-AD70-9C2BDBC75E5F}
+		SolutionGuid = {9B69206F-6B39-4909-80E9-E563905C9C10}
 	EndGlobalSection
 EndGlobal
