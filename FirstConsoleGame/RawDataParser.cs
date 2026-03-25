@@ -16,41 +16,18 @@ namespace FirstConsoleGame
 			data.hp = player.Hp;
 			return data;
 		}
-		private static RawMapData GetRawMapData(DungeonGame_Map map)
-		{
-			var data = new RawMapData();
-			data.sizex = map.size.x;
-			data.sizey = map.size.y;
-			data.gridx = map.GridPos.x;
-			data.gridy = map.GridPos.y;
-			data.buf = new int[map.size.y][];
-			data.isEndMap = map.isEndMap;
-			data.isStartMap = map.isStartMap;
-			for (int i = 0; i < map.size.y; i++)
-			{
-				data.buf[i] = new int[map.size.x];
-				for (int j = 0; j < map.size.x; j++)
-				{
-					if (map.GetEntity(j, i) is Fence)
-					{
-						data.buf[i][j] = (int)EntityEnum.Fence;
-					}
-					else
-					{
-						data.buf[i][j] = (int)EntityEnum.EmptyEntity;
-					}
-				}
-			}
-			return data;
-		}
 		private static RawStageData GetRawStageData()
 		{
 			var data = new RawStageData();
 			data.mapdatas = new List<RawMapData>();
-			DungeonGame_StageFactory factory = DungeonGame_StageFactory.GetInstance();
-			for (int i = 0; i < DungeonGame_StageFactory.GRID_HEIGHT; i++)
+			
+			
+			
+			
+			StageFactory factory = StageFactory.GetInstance();
+			for (int i = 0; i < StageFactory.GRID_HEIGHT; i++)
 			{
-				for (int j = 0; j < DungeonGame_StageFactory.GRID_WIDTH; j++)
+				for (int j = 0; j < StageFactory.GRID_WIDTH; j++)
 				{
 					var map = factory.GetMap(new MyVector(j, i));
 					if(map != null)
@@ -73,9 +50,37 @@ namespace FirstConsoleGame
 			return data;
 		}
 
-		public static DungeonGame_Map GetMapFromRawData(RawMapData data)
+		private static RawMapData GetRawMapData(Map map)
 		{
-			var map = DungeonGame_MapFactory.GetInstance().GetEmptyMap(new MyVector(data.sizex, data.sizey), new MyVector(data.gridx, data.gridy));
+			var data = new RawMapData();
+			data.sizex = map.size.x;
+			data.sizey = map.size.y;
+			data.gridx = map.GridPos.x;
+			data.gridy = map.GridPos.y;
+			data.buf = new int[map.size.y][];
+			data.isEndMap = map.isEndMap;
+			data.isStartMap = map.isStartMap;
+			for (int i = 0; i < map.size.y; i++)
+			{
+				data.buf[i] = new int[map.size.x];
+				for (int j = 0; j < map.size.x; j++)
+				{
+					if (map.GetEntity(j, i) is Fence)
+					{
+						data.buf[i][j] = (int)EntityEnum.Fence;
+					}
+					else
+					{
+						// Dont Save Player!! 
+						data.buf[i][j] = (int)EntityEnum.EmptyEntity;
+					}
+				}
+			}
+			return data;
+		}
+		public static Map GetMapFromRawData(RawMapData data)
+		{
+			var map = MapFactory.GetInstance().GetEmptyMap(new MyVector(data.sizex, data.sizey), new MyVector(data.gridx, data.gridy));
 
 			for (int i = 0; i < data.sizey; i++)
 			{
@@ -88,6 +93,9 @@ namespace FirstConsoleGame
 							break;
 						case (int)EntityEnum.EmptyEntity:
 							map.SetNewEntity<EmptyEntity>(new MyVector(j, i));
+							break;
+						default:
+							throw new Exception("Whats this Entity? Check Saved data or save logic. 이건 무슨 엔티티애요 저장은 안하고 불러오려고 하고 잇잔아요");
 							break;
 					}
 				}

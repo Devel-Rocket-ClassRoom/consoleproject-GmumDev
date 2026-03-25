@@ -10,17 +10,17 @@ namespace FirstConsoleGame
 
 	public class Door : Entity
 	{
-		private DungeonGame_Map targetMap;
+		private Map targetMap;
 		public override void Init(MyVector pos)
 		{
 			base.Init(pos);
 			symbol = 'D';
 		}
-		public void ConnectTo(DungeonGame_Map map)
+		public void ConnectTo(Map map)
 		{
 			this.targetMap = map;
 		}
-		public DungeonGame_Map GetTargetMap()
+		public Map GetTargetMap()
 		{
 			return targetMap;
 		}

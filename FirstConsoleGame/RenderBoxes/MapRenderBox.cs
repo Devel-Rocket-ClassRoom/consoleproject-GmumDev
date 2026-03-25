@@ -25,7 +25,12 @@ namespace FirstConsoleGame
 		{
 			DrawBorder($" [Stage {curStageNum}]");
 		}
-		public void Update(DungeonGame_Map map, int stageNum)
+		public void Update(
+			
+			
+			
+			
+			Map map, int stageNum)
 		{
 			if (curStageNum != stageNum)
 				Init();

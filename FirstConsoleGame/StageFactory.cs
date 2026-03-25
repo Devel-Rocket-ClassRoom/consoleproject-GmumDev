@@ -3,33 +3,14 @@ using static FirstConsoleGame.Utility;
 
 namespace FirstConsoleGame
 {
-	public class DungeonGame_StageFactory
+	public class StageFactory
 	{
-		/*
-			최소 2개~ 최대 WIDTH*HEIGHT개의 맵을 생성하여 Grid에 저장
-
-			1개는 StartMap 포함
-			1개는 EndMap 포함
-			위 두 특수 맵은 MapFactory에서 각각 메소드 delegate(예정)
-
-			시작맵 -> 끝맵의 최단 경로 생성(돌아가지 않는 경로)
-
-		d
-			남은 맵은 경로 주위에 배치(예정)
-				사이드 맵(Sidemap)
-					특수한 맵 배치(보너스 맵, 상점 등)
-				BFS로 depth 커지지 않게 
-
-
-		 */
-
-
-		private static DungeonGame_StageFactory instance;
-		private DungeonGame_MapFactory mapFactory;
+		private static StageFactory instance;
+		private MapFactory mapFactory;
 		public const int GRID_WIDTH = 7;
 		public const int GRID_HEIGHT = 7;
 
-		private DungeonGame_Map[,] mapGrid = new DungeonGame_Map[GRID_HEIGHT, GRID_WIDTH];
+		private Map[,] mapGrid = new Map[GRID_HEIGHT, GRID_WIDTH];
 		private MyVector gridSize = new MyVector(GRID_WIDTH, GRID_HEIGHT);
 
 		private MyVector startPos;
@@ -46,9 +27,9 @@ namespace FirstConsoleGame
 		public delegate bool ClearChecker();
 		public ClearChecker IsClear;
 		// -----
-		private DungeonGame_StageFactory()
+		private StageFactory()
 		{
-			mapFactory = DungeonGame_MapFactory.GetInstance();
+			mapFactory = MapFactory.GetInstance();
 			// never bigger than (MAX_BUF_WIDTH - 5, MAX_BUF_HEIGHT - 3)????????????????? over flow
 			maxMapSize = new MyVector(60, MAX_BUFFER_HEIGHT - 5);
 			maxMapSize.x = Math.Min(maxMapSize.x, MAX_BUFFER_WIDTH - 20);
@@ -59,15 +40,15 @@ namespace FirstConsoleGame
 			minMapSize.x = Math.Max(minMapSize.x, 4);
 			minMapSize.y = Math.Max(minMapSize.y, 4);
 		}
-		public static DungeonGame_StageFactory GetInstance()
+		public static StageFactory GetInstance()
 		{
 			if (instance == null)
-				instance = new DungeonGame_StageFactory();
+				instance = new StageFactory();
 			return instance;
 		}
 
 		// -----
-		public DungeonGame_Map GetMap(MyVector v) { return mapGrid[v.y, v.x]; }
+		public Map GetMap(MyVector v) { return mapGrid[v.y, v.x]; }
 		private MyVector GetRandMapSize()
 		{
 			return new MyVector(
@@ -135,7 +116,7 @@ namespace FirstConsoleGame
 		{
 			(startPos, endPos, HashSet<MyVector> mainPaths, int roomNum) = GetNewMapPath();
 
-			mapGrid = new DungeonGame_Map[GRID_HEIGHT, GRID_WIDTH];
+			mapGrid = new Map[GRID_HEIGHT, GRID_WIDTH];
 
 			foreach (var pos in mainPaths)
 			{
@@ -183,7 +164,7 @@ namespace FirstConsoleGame
 		}
 		public void SetNewStageWithRawData(RawStageData data)
 		{
-			mapGrid = new DungeonGame_Map[GRID_HEIGHT, GRID_WIDTH];
+			mapGrid = new Map[GRID_HEIGHT, GRID_WIDTH];
 
 			HashSet<MyVector> mainPaths = new HashSet<MyVector>();
 
@@ -220,7 +201,7 @@ namespace FirstConsoleGame
 		{
 			foreach (var pos in mainPaths)
 			{
-				DungeonGame_Map curmap = mapGrid[pos.y, pos.x];
+				Map curmap = mapGrid[pos.y, pos.x];
 
 				if (pos.x == startPos.x && pos.y == startPos.y)
 					mapFactory.FillUpMap_Start(curmap);
@@ -237,12 +218,12 @@ namespace FirstConsoleGame
 		{
 			foreach (var pos in mainPaths)
 			{
-				DungeonGame_Map curmap = mapGrid[pos.y, pos.x];
+				Map curmap = mapGrid[pos.y, pos.x];
 				foreach (DirIndex dir in Enum.GetValues<DirIndex>())
 				{
 					MyVector nearbyPos = pos + Utility.dirToDeltaPos[dir];
 					if (gridSize.IsOutOfSquare(nearbyPos)) continue;
-					DungeonGame_Map targetmap = mapGrid[nearbyPos.y, nearbyPos.x];
+					Map targetmap = mapGrid[nearbyPos.y, nearbyPos.x];
 					if (targetmap != null)
 					{
 						curmap.SetDoorAndConnectTo(dir, targetmap);

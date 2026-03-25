@@ -12,11 +12,14 @@ namespace FirstConsoleGame
 
 		public override void Init()
 		{
-			var factory = DungeonGame_StageFactory.GetInstance();
+			var factory = 
+				
+				
+				StageFactory.GetInstance();
 			mapPosList = new List<MyVector>();
-			for (int r = 0; r < DungeonGame_StageFactory.GRID_HEIGHT; r++)
+			for (int r = 0; r < StageFactory.GRID_HEIGHT; r++)
 			{
-				for (int c = 0; c < DungeonGame_StageFactory.GRID_WIDTH; c++)
+				for (int c = 0; c < StageFactory.GRID_WIDTH; c++)
 				{
 					var pos = new MyVector(c, r);
 					var map = factory.GetMap(pos);
@@ -32,7 +35,7 @@ namespace FirstConsoleGame
 		{
 			DrawBorder(" [Mini Map]");
 		}
-		public void Update(DungeonGame_Map curmap)
+		public void Update(Map curmap)
 		{
 			curMapPos = curmap.GridPos;
 		}

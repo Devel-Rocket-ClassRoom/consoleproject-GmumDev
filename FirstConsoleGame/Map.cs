@@ -1,11 +1,8 @@
 ﻿
 namespace FirstConsoleGame
 {
-	public class DungeonGame_Map : IMapDataModifier
+	public class Map : IMapDataModifier
 	{
-		/* Too many roles...
-
-		*/
 		EntityManager entityManager;
 
 
@@ -32,7 +29,7 @@ namespace FirstConsoleGame
 		public ClearChecker IsClear;
 
 		// -----
-		public DungeonGame_Map(MyVector size, MyVector gridPos, float difficulty)
+		public Map(MyVector size, MyVector gridPos, float difficulty)
 		{
 			this.size = new MyVector(size.x, size.y);
 			this.gridPos = gridPos;
@@ -143,7 +140,7 @@ namespace FirstConsoleGame
 			MyVector pos = GetDoorCardinalPos()[(int)dir];
 			return (Door)GetEntity(pos.x, pos.y);
 		}
-		public void SetDoorAndConnectTo(DirIndex dir, DungeonGame_Map map)
+		public void SetDoorAndConnectTo(DirIndex dir, Map map)
 		{
 			MyVector[] doorPosDatas = GetDoorCardinalPos();
 

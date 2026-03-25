@@ -5,7 +5,7 @@ using static FirstConsoleGame.Utility;
 
 namespace FirstConsoleGame
 {
-	public class DungeonGame_Renderer
+	public class Renderer
 	{
 		char[,] buf;
 
@@ -30,8 +30,8 @@ namespace FirstConsoleGame
 
 
 		// ----- Singleton + Constructor
-		private static DungeonGame_Renderer instance;
-		private DungeonGame_Renderer(MyVector maxMapSize)
+		private static Renderer instance;
+		private Renderer(MyVector maxMapSize)
 		{
 			buf = new char[MAX_BUFFER_HEIGHT, MAX_BUFFER_WIDTH];
 
@@ -72,11 +72,11 @@ namespace FirstConsoleGame
 
 
 		}
-		public static DungeonGame_Renderer GetInstance(MyVector maxMapSize)
+		public static Renderer GetInstance(MyVector maxMapSize)
 		{
 			if (instance == null)
 			{
-				instance = new DungeonGame_Renderer(maxMapSize);
+				instance = new Renderer(maxMapSize);
 				for (int i = 0; i < MAX_BUFFER_HEIGHT; i++)
 				{
 					for (int j = 0; j < MAX_BUFFER_WIDTH; j++)
@@ -90,7 +90,7 @@ namespace FirstConsoleGame
 		}
 
 		// ----- 
-		public void Update(DungeonGame_Map map, int stage_num, string msg, int maxhp, int hp)
+		public void Update(Map map, int stage_num, string msg, int maxhp, int hp)
 		{
 			mapbox.Update(map, stage_num);
 			msgbox.Update(msg);

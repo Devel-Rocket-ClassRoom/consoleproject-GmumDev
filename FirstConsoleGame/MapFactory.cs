@@ -2,13 +2,13 @@
 using static FirstConsoleGame.Utility;
 namespace FirstConsoleGame
 {
-	public class DungeonGame_MapFactory
+	public class MapFactory
 	{
 
 		// ----- Singleton + Constructor
-		private static DungeonGame_MapFactory instance;
+		private static MapFactory instance;
 		EntityManager entityManager;
-		private DungeonGame_MapFactory()
+		private MapFactory()
 		{
 			entityManager = EntityManager.GetInstance();
 			FillUpMapTasks = new List<FillUpMapDelegate>();
@@ -17,30 +17,30 @@ namespace FirstConsoleGame
 			FillUpMapTasks.Add(FillUpMap_SnakeGrowUp);
 			FillUpMapTasks.Add(FillUpMap_BigSnake);
 		}
-		public static DungeonGame_MapFactory GetInstance()
+		public static MapFactory GetInstance()
 		{
 			if (instance == null)
 			{
-				instance = new DungeonGame_MapFactory();
+				instance = new MapFactory();
 			}
 
 			return instance;
 		}
 
-		public delegate void FillUpMapDelegate(DungeonGame_Map map);
+		public delegate void FillUpMapDelegate(Map map);
 		public List<FillUpMapDelegate> FillUpMapTasks;
 
 		// -----
-		public DungeonGame_Map GetEmptyMap(MyVector mapSize, MyVector gridPos)
+		public Map GetEmptyMap(MyVector mapSize, MyVector gridPos)
 		{
-			DungeonGame_Map map = new DungeonGame_Map(mapSize, gridPos, difficulty: 1f);
+			Map map = new Map(mapSize, gridPos, difficulty: 1f);
 
 			map.SetEmptyMap();
 
 			return map;
 		}
 
-		public void FillUpMap_Default(DungeonGame_Map map)
+		public void FillUpMap_Default(Map map)
 		{
 			HashSet<(int, int)> monsterPos = new HashSet<(int, int)>();
 			List<MyVector> endPos = new List<MyVector>();
@@ -62,7 +62,7 @@ namespace FirstConsoleGame
 
 			map.UpdateMapData();
 		}
-		public void FillUpMap_SnakeGrowUp(DungeonGame_Map map)
+		public void FillUpMap_SnakeGrowUp(Map map)
 		{
 			HashSet<(int, int)> monsterPos = new HashSet<(int, int)>();
 			List<MyVector> endPos = new List<MyVector>();
@@ -87,7 +87,7 @@ namespace FirstConsoleGame
 
 			map.UpdateMapData();
 		}
-		public void FillUpMap_Snake(DungeonGame_Map map)
+		public void FillUpMap_Snake(Map map)
 		{
 			HashSet<(int, int)> monsterPos = new HashSet<(int, int)>();
 			GetRandomEmptyPos(map, ref monsterPos, map.InitMonsterNum);
@@ -99,7 +99,7 @@ namespace FirstConsoleGame
 
 			map.UpdateMapData();
 		}
-		public void FillUpMap_BigSnake(DungeonGame_Map map)
+		public void FillUpMap_BigSnake(Map map)
 		{
 			HashSet<(int, int)> monsterPos = new HashSet<(int, int)>();
 			GetRandomEmptyPos(map, ref monsterPos, 1);
@@ -111,7 +111,7 @@ namespace FirstConsoleGame
 
 			map.UpdateMapData();
 		}
-		public void FillUpMap_Start(DungeonGame_Map map)
+		public void FillUpMap_Start(Map map)
 		{
 			map.IsClear = () => true;
 			map.isStartMap = true;
@@ -135,7 +135,7 @@ namespace FirstConsoleGame
 
 			map.UpdateMapData();
 		}
-		public void FillUpMap_End(DungeonGame_Map map)
+		public void FillUpMap_End(Map map)
 		{
 			map.IsClear = () => true;
 			map.isEndMap = true;
@@ -177,7 +177,7 @@ namespace FirstConsoleGame
 		/// <param name="startPos"></param>
 		/// <param name="endPos"></param>
 		/// <param name="many"></param>
-		private void SetRandomFences(DungeonGame_Map map, MyVector[] startPos, MyVector[] endPos, int many)
+		private void SetRandomFences(Map map, MyVector[] startPos, MyVector[] endPos, int many)
 		{
 			HashSet<(int, int)> notAllowedPos = new HashSet<(int, int)>();  // fence positions
 			HashSet<(int, int)> reachables = new HashSet<(int, int)>();     // endPositions must be subset of this.
@@ -203,7 +203,7 @@ namespace FirstConsoleGame
 				map.SetEntity(entity, entity.pos);
 			}
 		}
-		private HashSet<(int, int)> GetReachables(DungeonGame_Map map, ref HashSet<(int, int)> visited, MyVector[] starts, HashSet<char> notAllowedSymbols, HashSet<(int, int)> notAllowedPos)
+		private HashSet<(int, int)> GetReachables(Map map, ref HashSet<(int, int)> visited, MyVector[] starts, HashSet<char> notAllowedSymbols, HashSet<(int, int)> notAllowedPos)
 		{
 
 			(int, int)[] dp = { (0, 1), (0, -1), (1, 0), (-1, 0) };
@@ -238,7 +238,7 @@ namespace FirstConsoleGame
 
 			return visited;
 		}
-		private void GetRandomEmptyPos(DungeonGame_Map map, ref HashSet<(int, int)> visited, int cnt)
+		private void GetRandomEmptyPos(Map map, ref HashSet<(int, int)> visited, int cnt)
 		{
 			HashSet<MyVector> doors = map.GetDoorCardinalPlayerPos().ToHashSet();
 			while (cnt > 0)

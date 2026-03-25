@@ -13,9 +13,9 @@ namespace FirstConsoleGame
 		private static DungeonGame instance;
 
 		private AlertRenderer alertRenderer;
-		private DungeonGame_Renderer renderer;
-		private DungeonGame_StageFactory stageManager;
-		private DungeonGame_Map curMap;
+		private Renderer renderer;
+		private StageFactory stageManager;
+		private Map curMap;
 		private Player player;
 
 		private int curStage = 1;
@@ -57,9 +57,9 @@ namespace FirstConsoleGame
 			// init--------
 			player = (Player)EntityManager.GetInstance().GetNewInstance<Player>(new MyVector(1, 1));
 
-			stageManager = DungeonGame_StageFactory.GetInstance();
+			stageManager = StageFactory.GetInstance();
 
-			renderer = DungeonGame_Renderer.GetInstance(stageManager.MaxMapSize);
+			renderer = Renderer.GetInstance(stageManager.MaxMapSize);
 
 			InitAlerts();
 
@@ -78,9 +78,12 @@ namespace FirstConsoleGame
 		{
 			alertRenderer = AlertRenderer.GetInstance();
 
+			// Q. 왜 alertRenderer에서 안하고 여기서 하나요? 
+			// A. callback 전달하기 편해서. 
+
 			alertRenderer.alertGameoverBox.SetCallback('R', "Restart", RestartGame);
 			alertRenderer.alertGameoverBox.SetCallback('Q', "Quit", QuitGame);
-			alertRenderer.alertGameoverBox.SetCallback('D', "Donate", alertRenderer.alertDonateBox.Alert);
+			alertRenderer.alertGameoverBox.SetCallback('T', "Donate", alertRenderer.alertDonateBox.Alert);
 			alertRenderer.alertGameoverBox.LocalRender();
 
 			alertRenderer.alertDonateBox.SetCallback('Q', "Quit", QuitGame);
@@ -153,7 +156,12 @@ namespace FirstConsoleGame
 		}
 
 		// Set Current map to game and initialize
-		private void SetCurMap(DungeonGame_Map map, DirIndex dir)
+		private void SetCurMap(
+			
+			
+			
+			
+			Map map, DirIndex dir)
 		{
 			curMap = map;
 			curMap.SetPlayerPosOnNewMap(player, dir);
