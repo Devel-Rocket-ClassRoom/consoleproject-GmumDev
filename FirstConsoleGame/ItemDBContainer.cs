@@ -11,11 +11,10 @@ namespace FirstConsoleGame
 	{
 		private RawItemData[] datas;
 		private static ItemDBContainer instance;
-		private const string path = "../../../";
 		private ItemDBContainer()
 		{
 			
-			datas = Utility.LoadData<RawItemData[]>(path + "ItemData.json");
+			datas = Utility.LoadData<RawItemData[]>("ItemData.json");
 ;			
 			
 		}
