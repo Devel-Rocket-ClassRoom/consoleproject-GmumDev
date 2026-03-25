@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -15,7 +14,8 @@ namespace FirstConsoleGame
 		private const string path = "../../../";
 		private ItemDBContainer()
 		{
-			datas = JsonSerializer.Deserialize<RawItemData[]>(File.ReadAllText(path + "ItemData.json"));
+			
+			datas = Utility.LoadData<RawItemData[]>(path + "ItemData.json");
 ;			
 			
 		}

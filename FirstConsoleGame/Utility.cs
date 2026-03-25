@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json;
+
 namespace FirstConsoleGame
 {
 	public static class Utility
@@ -52,6 +54,17 @@ namespace FirstConsoleGame
 			} while (ableChars.Contains(c) == false);
 
 			return c;
+		}
+		public static void SaveData(object data, string path)
+		{
+			string result = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+			File.WriteAllText(path, result);
+		}
+		public static T LoadData<T>(string path)
+		{
+			string s = File.ReadAllText(path);
+			var obj = JsonSerializer.Deserialize<T>(s);
+			return obj;
 		}
 	}
 }
