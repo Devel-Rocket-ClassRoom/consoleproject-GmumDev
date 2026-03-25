@@ -156,12 +156,7 @@ namespace FirstConsoleGame
 		}
 
 		// Set Current map to game and initialize
-		private void SetCurMap(
-			
-			
-			
-			
-			Map map, DirIndex dir)
+		private void SetCurMap(Map map, DirIndex dir)
 		{
 			curMap = map;
 			curMap.SetPlayerPosOnNewMap(player, dir);
