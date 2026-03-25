@@ -69,6 +69,34 @@ namespace FirstConsoleGame
 					{
 						data.buf[i][j] = (int)EntityEnum.Fence;
 					}
+					else if (map.GetEntity(j, i) is Monster)
+					{
+						data.buf[i][j] = (int)EntityEnum.Fence;
+					}
+					else if (map.GetEntity(j, i) is BigSnake_Head)
+					{
+						data.buf[i][j] = (int)EntityEnum.BigSnake_Head;
+					}
+					else if (map.GetEntity(j, i) is HealingPotion)
+					{
+						data.buf[i][j] = (int)EntityEnum.HealingPotion;
+					}
+					else if (map.GetEntity(j, i) is MapClearBicon)
+					{
+						data.buf[i][j] = (int)EntityEnum.MapClearBicon;
+					}
+					else if (map.GetEntity(j, i) is NextStageBicon)
+					{
+						data.buf[i][j] = (int)EntityEnum.NextStageBicon;
+					}
+					else if (map.GetEntity(j, i) is Snake_Head)
+					{
+						data.buf[i][j] = (int)EntityEnum.Snake_Head;
+					}
+					else if (map.GetEntity(j, i) is SnakeBaby)
+					{
+						data.buf[i][j] = (int)EntityEnum.SnakeBaby;
+					}
 					else
 					{
 						// Dont Save Player!! 
@@ -93,6 +121,27 @@ namespace FirstConsoleGame
 							break;
 						case (int)EntityEnum.EmptyEntity:
 							map.SetNewEntity<EmptyEntity>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.Monster:
+							map.SetNewEntity<Monster>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.BigSnake_Head:
+							map.SetNewEntity<BigSnake_Head>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.HealingPotion:
+							map.SetNewEntity<HealingPotion>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.MapClearBicon:
+							map.SetNewEntity<MapClearBicon>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.NextStageBicon:
+							map.SetNewEntity<NextStageBicon>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.Snake_Head:
+							map.SetNewEntity<Snake_Head>(new MyVector(j, i));
+							break;
+						case (int)EntityEnum.SnakeBaby:
+							map.SetNewEntity<SnakeBaby>(new MyVector(j, i));
 							break;
 						default:
 							throw new Exception("Whats this Entity? Check Saved data or save logic. 이건 무슨 엔티티애요 저장은 안하고 불러오려고 하고 잇잔아요");

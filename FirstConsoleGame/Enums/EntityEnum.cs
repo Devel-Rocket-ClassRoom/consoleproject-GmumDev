@@ -9,6 +9,13 @@ namespace FirstConsoleGame
 	public enum EntityEnum
 	{
 		EmptyEntity,
-		Fence
+		Fence,
+		Monster,
+		BigSnake_Head,
+		HealingPotion,
+		MapClearBicon,
+		NextStageBicon,
+		Snake_Head,
+		SnakeBaby,
 	}
 }
