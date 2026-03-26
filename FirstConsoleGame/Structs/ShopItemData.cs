@@ -8,12 +8,14 @@ namespace FirstConsoleGame
 {
 	public readonly struct ShopItemData
 	{
+		public readonly ItemID id;
 		public readonly string name;
 		public readonly int price;
 		public readonly char symbol;
 		public readonly int count;
-		public ShopItemData(string name, char symbol, int price, int count)
+		public ShopItemData(ItemID id, string name, char symbol, int price, int count)
 		{
+			this.id = id;
 			this.name = name;
 			this.symbol = symbol;
 			this.price = price;

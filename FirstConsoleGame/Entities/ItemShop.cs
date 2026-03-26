@@ -96,7 +96,12 @@ namespace FirstConsoleGame
 			ShopItemData item = items[idx];
 			if (leftItemStock[idx] > 0)
 			{
-				// check player money
+				var mapdata = map.GetMapData();
+				MyVector playerPos = new MyVector(mapdata["player_x"], mapdata["player_y"]);
+				var player = (Player)map.GetEntity(playerPos.x, playerPos.y);
+				bool bought = player.BuyShopItem(item);
+
+				if (bought == false) return;
 
 				leftItemStock[idx]--;
 				if (leftItemStock[idx] <= 0)
@@ -110,9 +115,6 @@ namespace FirstConsoleGame
 						shopBox[i].Redraw();
 					}
 				}
-				// reduce player money
-
-				// add item to player inventory
 			}
 		}
 		private void BuyLeftItem()

@@ -120,7 +120,7 @@ namespace FirstConsoleGame
 
 			// initial draw
 			renderer.UpdateNewStage();
-			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Update(curMap, curStage, msg, player);
 			renderer.Draw();
 		}
 		private void SetNewStageWithRawData(RawGameData data)
@@ -131,7 +131,7 @@ namespace FirstConsoleGame
 
 			// initial draw
 			renderer.UpdateNewStage();
-			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Update(curMap, curStage, msg, player);
 			renderer.Draw();
 		}
 
@@ -214,7 +214,7 @@ namespace FirstConsoleGame
 				// some alerts can be invoked by other alerts. so check again. 
 			} while (alertRenderer.UpdateAlertedCnt() > 0);
 
-			renderer.Update(curMap, curStage, msg, player.MaxHp, player.Hp);
+			renderer.Update(curMap, curStage, msg, player);
 			renderer.Draw();
 
 			
