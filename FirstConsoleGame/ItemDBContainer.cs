@@ -22,8 +22,11 @@ namespace FirstConsoleGame
 			}
 			catch
 			{
-				var obj = JsonSerializer.Deserialize<RawItemData[]>("[\r\n\t{\r\n\t\t\"name\": \"Potion\",\r\n\t\t\"symbol\": \"8\",\r\n\t\t\"price\": 2,\r\n\t\t\"descript\": \"Healing potion. Gain 2 hp.\"\r\n\t},\r\n\t{\r\n\t\t\"name\": \"Cookie\",\r\n\t\t\"symbol\": \"C\",\r\n\t\t\"price\": 1,\r\n\t\t\"descript\": \"Delicious.\"\r\n\t},\r\n\t{\r\n\t\t\"name\": \"Chicken\",\r\n\t\t\"symbol\": \"9\",\r\n\t\t\"price\": 3,\r\n\t\t\"descript\": \"Very Delicious.\"\r\n\t}\r\n]");
-				datas = obj;
+				datas = new RawItemData[3];
+				datas[(int)ItemID.Potion] = new RawItemData("Potion", '8', 2, "Healing potion. Gain 2 hp");
+				datas[(int)ItemID.BigPotion] = new RawItemData("Cookie", 'C', 1, "Delicious");
+				datas[(int)ItemID.SmallPotion] = new RawItemData("Chicken", '9', 3, "Very Delicious.");
+				
 			}
 			
 		}

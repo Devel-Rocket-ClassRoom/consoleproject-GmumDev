@@ -18,5 +18,12 @@ namespace FirstConsoleGame
 		public int price;
 		[JsonInclude]
 		public string descript;
+		public RawItemData(string name, char symbol, int price, string descript)
+		{
+			this.name = name;
+			this.symbol = symbol;
+			this.price = price;
+			this.descript = descript;
+		}
 	}
 }
