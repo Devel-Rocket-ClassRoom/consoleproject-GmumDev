@@ -111,7 +111,7 @@ namespace FirstConsoleGame
 					outbuf.Append(buf[i, j]);
 					buf[i, j] = EMPTY_SYMBOL;
 				}
-				outbuf.Append('\n');   // for windows
+				outbuf.Append(NEW_LINE);
 			}
 			Console.SetCursorPosition(0, 0);
 			Console.WriteLine(outbuf);
