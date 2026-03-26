@@ -13,5 +13,9 @@ namespace FirstConsoleGame
 		public int hp;
 		[JsonInclude]
 		public int money;
+		[JsonInclude]
+		public List<int> InventoryCnt;
+		[JsonInclude]
+		public List<ItemID> InventoryItemID;
 	}
 }

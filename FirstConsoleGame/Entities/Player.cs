@@ -36,6 +36,9 @@ namespace FirstConsoleGame
 			// inven
 			hp = data.hp;
 			money = data.money;
+			inventory = new Dictionary<ItemID, int>();
+			for(int i = 0; i < data.InventoryCnt.Count; i++)
+				inventory.Add(data.InventoryItemID[i], data.InventoryCnt[i]);
 		}
 		public void TakeDamage(int damage)
 		{

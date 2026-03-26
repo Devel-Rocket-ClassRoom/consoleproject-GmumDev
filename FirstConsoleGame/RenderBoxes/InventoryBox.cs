@@ -30,6 +30,7 @@ namespace FirstConsoleGame
 		public InventoryBox(MyVector margin, MyVector size) : base(margin, size) { }
 		public override void Init()
 		{
+			lastInvenCnt = 0;
 			gridMargin = new MyVector(1, 1);
 			cellPadding = new MyVector(1, 1);
 			gridCellSize = new MyVector((size.x - gridMargin.x*2)/elemCol, elemHeight + cellPadding.y*2 + 2);

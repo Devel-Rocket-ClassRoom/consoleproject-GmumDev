@@ -15,6 +15,13 @@ namespace FirstConsoleGame
 			var data = new RawPlayerData();
 			data.hp = player.Hp;
 			data.money = player.Money;
+			data.InventoryCnt = new List<int>();
+			data.InventoryItemID = new List<ItemID>();
+			foreach(var it in player.Inventory)
+			{
+				data.InventoryItemID.Add(it.Key);
+				data.InventoryCnt.Add(it.Value);
+			}
 			return data;
 		}
 		private static RawStageData GetRawStageData()
