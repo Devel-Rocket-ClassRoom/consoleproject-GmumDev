@@ -16,7 +16,7 @@ namespace FirstConsoleGame
 		public override string OnPlayerEnter()
 		{
 			Player player = MoveCapturing();
-
+			player.AddMoney(1);
 			var mapData = map.GetMapData();
 			mapData[("monster_cnt")]--;
 			if (mapData[("monster_cnt")] == 0)

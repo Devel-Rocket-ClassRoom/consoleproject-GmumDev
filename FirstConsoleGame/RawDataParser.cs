@@ -14,6 +14,7 @@ namespace FirstConsoleGame
 		{
 			var data = new RawPlayerData();
 			data.hp = player.Hp;
+			data.money = player.Money;
 			return data;
 		}
 		private static RawStageData GetRawStageData()

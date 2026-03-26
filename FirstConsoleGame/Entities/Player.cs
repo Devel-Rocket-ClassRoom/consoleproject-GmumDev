@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static FirstConsoleGame.Program;
@@ -11,6 +12,11 @@ namespace FirstConsoleGame
 	{
 		private int maxHp;
 		private int hp;
+		private int money;
+		private Dictionary<ItemID, int> inventory = new Dictionary<ItemID, int>();
+		public Dictionary<ItemID, int> Inventory { get => inventory; }
+		private int maxInvenCell = InventoryBox.elemCol * InventoryBox.elemRow;
+		public int Money { get => money; }
 		public int MaxHp { get => maxHp; }
 		public int Hp { get => hp; }
 		private bool isDead = false;
@@ -22,10 +28,13 @@ namespace FirstConsoleGame
 			maxHp = 8;
 			hp = 3;
 			isDead = false;
+			money = 10;
 		}
 		public void InitWithRawData(RawPlayerData data)
 		{
+			// inven
 			hp = data.hp;
+			money = data.money;
 		}
 		public void TakeDamage(int damage)
 		{
@@ -56,6 +65,36 @@ namespace FirstConsoleGame
 		public override EntityEnum GetEntityEnum()
 		{
 			return EntityEnum.Player;
+		}
+	
+		public bool CanBuy(ShopItemData itemData)
+		{
+			return itemData.price <= money && (inventory.ContainsKey(itemData.id) || inventory.Count < maxInvenCell);
+		}
+		public void AddMoney(int amount)
+		{
+			money += amount;
+		}
+		public bool BuyShopItem(ShopItemData itemData)
+		{
+			if (CanBuy(itemData) == false) return false;
+
+			bool isExist = inventory.ContainsKey(itemData.id);
+			if(isExist)
+			{
+				inventory[itemData.id]++;
+			}
+			else 
+			{
+				inventory.Add(itemData.id, 1);
+			}
+			money -= itemData.price;
+
+			return true;
+		}
+		public void UseItem()
+		{
+
 		}
 	}
 }

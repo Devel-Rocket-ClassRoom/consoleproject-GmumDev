@@ -11,9 +11,10 @@ namespace FirstConsoleGame
 	{
 		public PlayerRenderBox(MyVector size) : base(size) { }
 		public PlayerRenderBox(MyVector margin, MyVector size) : base(margin, size) { }
-		public void Update(int maxhp, int hp)
+		public void Update(int maxhp, int hp, int money)
 		{
 			DrawLife(maxhp, hp);
+			DrawMoney(money);
 		}
 		private void DrawSingleLife(int x, int y, bool isOn)
 		{
@@ -62,6 +63,15 @@ namespace FirstConsoleGame
 							DrawSingleLife(c, r, false);
 					}
 				}
+			}
+		}
+		private void DrawMoney(int money)
+		{
+			string moneyStr = $"Money: ${money}";
+			MyVector pivot = new MyVector(size.x - moneyStr.Length - 1, size.y - 2);
+			for(int i = 0; i < moneyStr.Length; i++)
+			{
+				buf[pivot.y, pivot.x + i] = moneyStr[i];
 			}
 		}
 		public override void DrawBorder()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -32,7 +33,7 @@ namespace FirstConsoleGame
 		public ShopItemData GetShopItemData(ItemID id, int cnt)
 		{
 			var item = GetItemDataById(id);
-			return new ShopItemData(item.name, item.symbol, item.price, cnt);
+			return new ShopItemData(id, item.name, item.symbol, item.price, cnt);
 		}
 	}
 }

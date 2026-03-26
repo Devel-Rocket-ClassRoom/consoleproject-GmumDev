@@ -6,15 +6,15 @@
 		"descript": "Healing potion. Gain 2 hp."
 	},
 	{
-		"name": "Small Potion",
-		"symbol": "6",
+		"name": "Cookie",
+		"symbol": "C",
 		"price": 1,
-		"descript": "Healing potion. Gain 1 hp."
+		"descript": "Delicious."
 	},
 	{
-		"name": "Big Potion",
+		"name": "Chicken",
 		"symbol": "9",
 		"price": 3,
-		"descript": "Healing potion. Gain 3 hp."
+		"descript": "Very Delicious."
 	}
 ]

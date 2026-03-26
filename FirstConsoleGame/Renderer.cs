@@ -90,12 +90,13 @@ namespace FirstConsoleGame
 		}
 
 		// ----- 
-		public void Update(Map map, int stage_num, string msg, int maxhp, int hp)
+		public void Update(Map map, int stage_num, string msg, Player player)
 		{
 			mapbox.Update(map, stage_num);
 			msgbox.Update(msg);
 			minimapBox.Update(map);
-			playerbox.Update(maxhp, hp);
+			playerbox.Update(player.MaxHp, player.Hp, player.Money);
+			inventorybox.Update(player.Inventory);
 		}
 		public void Draw()
 		{

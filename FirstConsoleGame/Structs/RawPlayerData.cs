@@ -11,5 +11,7 @@ namespace FirstConsoleGame
 	{
 		[JsonInclude]
 		public int hp;
+		[JsonInclude]
+		public int money;
 	}
 }
