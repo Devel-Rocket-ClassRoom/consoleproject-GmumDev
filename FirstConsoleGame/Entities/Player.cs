@@ -13,7 +13,7 @@ namespace FirstConsoleGame
 		private int maxHp;
 		private int hp;
 		private int money;
-		private Dictionary<ItemID, int> inventory = new Dictionary<ItemID, int>();
+		private Dictionary<ItemID, int> inventory;
 		public Dictionary<ItemID, int> Inventory { get => inventory; }
 		private int maxInvenCell = InventoryBox.elemCol * InventoryBox.elemRow;
 		public int Money { get => money; }
@@ -24,6 +24,7 @@ namespace FirstConsoleGame
 		public override void Init(MyVector pos)
 		{
 			base.Init(pos);
+			inventory = new Dictionary<ItemID, int>();
 			symbol = 'P';
 			maxHp = 8;
 			hp = 3;
