@@ -147,8 +147,15 @@ namespace FirstConsoleGame
 		}
 		private void LoadGame()
 		{
-			RawGameData data = Utility.LoadData<RawGameData>("Game.json");
-			InitGameWithRawData(data);
+			try
+			{
+				RawGameData data = Utility.LoadData<RawGameData>("Game.json");
+				InitGameWithRawData(data);
+			}
+			catch
+			{
+				msg = "No Saved Data";
+			}
 		}
 		private void QuitGame()
 		{

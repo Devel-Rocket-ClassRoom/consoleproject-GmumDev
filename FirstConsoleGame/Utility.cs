@@ -61,11 +61,11 @@ namespace FirstConsoleGame
 		{
 			
 			string result = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-			File.WriteAllText(Path.Combine("../../../Jsons/", path), result);
+			File.WriteAllText(path, result);
 		}
 		public static T LoadData<T>(string path)
 		{
-			string s = File.ReadAllText(Path.Combine("../../../Jsons/", path));
+			string s = File.ReadAllText(path);
 			var obj = JsonSerializer.Deserialize<T>(s);
 			return obj;
 		}
