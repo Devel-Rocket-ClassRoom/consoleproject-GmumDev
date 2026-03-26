@@ -25,5 +25,9 @@ namespace FirstConsoleGame
 			}
 			return $"You moved to ({player.pos.x}, {player.pos.y})...Killed Monster! {mapData[("monster_cnt")]} monster left.";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.Monster;
+		}
 	}
 }

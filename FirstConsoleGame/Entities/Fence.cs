@@ -13,5 +13,9 @@ namespace FirstConsoleGame
 		{
 			return "Fail to move: conflicts wall";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.Fence;
+		}
 	}
 }

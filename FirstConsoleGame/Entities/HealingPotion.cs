@@ -23,5 +23,9 @@ namespace FirstConsoleGame
 
 			return $"You moved to ({player.pos.x}, {player.pos.y})...Got healing potion! Hp {prevHp} -> {newHp}";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.HealingPotion;
+		}
 	}
 }

@@ -53,5 +53,9 @@ namespace FirstConsoleGame
 		{
 			return "Fail to move: out of map";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.Player;
+		}
 	}
 }

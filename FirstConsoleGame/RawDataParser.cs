@@ -65,42 +65,18 @@ namespace FirstConsoleGame
 				data.buf[i] = new int[map.size.x];
 				for (int j = 0; j < map.size.x; j++)
 				{
-					if (map.GetEntity(j, i) is Fence)
+					EntityEnum entity = map.GetEntity(j, i).GetEntityEnum();
+					switch(entity)
 					{
-						data.buf[i][j] = (int)EntityEnum.Fence;
-					}
-					else if (map.GetEntity(j, i) is Monster)
-					{
-						data.buf[i][j] = (int)EntityEnum.Fence;
-					}
-					else if (map.GetEntity(j, i) is BigSnake_Head)
-					{
-						data.buf[i][j] = (int)EntityEnum.BigSnake_Head;
-					}
-					else if (map.GetEntity(j, i) is HealingPotion)
-					{
-						data.buf[i][j] = (int)EntityEnum.HealingPotion;
-					}
-					else if (map.GetEntity(j, i) is MapClearBicon)
-					{
-						data.buf[i][j] = (int)EntityEnum.MapClearBicon;
-					}
-					else if (map.GetEntity(j, i) is NextStageBicon)
-					{
-						data.buf[i][j] = (int)EntityEnum.NextStageBicon;
-					}
-					else if (map.GetEntity(j, i) is Snake_Head)
-					{
-						data.buf[i][j] = (int)EntityEnum.Snake_Head;
-					}
-					else if (map.GetEntity(j, i) is SnakeBaby)
-					{
-						data.buf[i][j] = (int)EntityEnum.SnakeBaby;
-					}
-					else
-					{
-						// Dont Save Player!! 
-						data.buf[i][j] = (int)EntityEnum.EmptyEntity;
+						case EntityEnum.Door:
+						case EntityEnum.Player:
+						case EntityEnum.ItemShop:
+						case EntityEnum.Snake_Tail:
+							data.buf[i][j] = (int)EntityEnum.EmptyEntity;
+							break;
+						default:
+							data.buf[i][j] = (int)entity;
+							break;
 					}
 				}
 			}

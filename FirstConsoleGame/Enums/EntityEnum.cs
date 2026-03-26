@@ -17,5 +17,9 @@ namespace FirstConsoleGame
 		NextStageBicon,
 		Snake_Head,
 		SnakeBaby,
+		Door,
+		Player,
+		ItemShop,
+		Snake_Tail,
 	}
 }

@@ -117,5 +117,9 @@ namespace FirstConsoleGame
 
 			return $"You Tried to dive Strong Monster! Life : {player.Hp}. Never Do that!!!";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.Snake_Head;
+		}
 	}
 }

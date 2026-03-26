@@ -12,5 +12,6 @@ namespace FirstConsoleGame
 		void Update();
 		string OnPlayerEnter();
 		public bool IsUpdatedOnCurFrame { get; set; }
+		public EntityEnum GetEntityEnum();
 	}
 }

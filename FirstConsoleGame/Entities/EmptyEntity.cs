@@ -14,5 +14,9 @@ namespace FirstConsoleGame
 			Player player = MoveCapturing();
 			return "You moved to (" + player.pos.x + ", " + player.pos.y + ")...";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.EmptyEntity;
+		}
 	}
 }
