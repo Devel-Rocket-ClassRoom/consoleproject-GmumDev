@@ -1,4 +1,5 @@
 ﻿
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace FirstConsoleGame
@@ -13,6 +14,7 @@ namespace FirstConsoleGame
 		public const int MAX_BUFFER_WIDTH = 200;
 		
 		public static Random rand = new Random((int)DateTime.Now.Ticks);
+		public static string NEW_LINE = System.Environment.NewLine;
 
 		private static HashSet<char> ableChars = new HashSet<char> { 'W', 'A', 'S', 'D', 'Q' };
 		public static Dictionary<DirIndex, MyVector> dirToDeltaPos = new Dictionary<DirIndex, MyVector>

@@ -28,5 +28,9 @@ namespace FirstConsoleGame
 		{
 			return "Door Locked!";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.Door;
+		}
 	}
 }

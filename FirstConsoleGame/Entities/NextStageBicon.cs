@@ -18,5 +18,9 @@ namespace FirstConsoleGame
 		{
 			return "You can't go next stage now!!";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.NextStageBicon;
+		}
 	}
 }

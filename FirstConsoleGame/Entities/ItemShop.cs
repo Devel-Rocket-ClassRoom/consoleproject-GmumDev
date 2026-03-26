@@ -159,5 +159,9 @@ namespace FirstConsoleGame
 
 			return $"Thanks!";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.ItemShop;
+		}
 	}
 }

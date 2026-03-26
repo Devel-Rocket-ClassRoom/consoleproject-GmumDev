@@ -30,5 +30,9 @@ namespace FirstConsoleGame
 			Player player = MoveCapturing();
 			return $"You moved to ({player.pos.x}, {player.pos.y})...Eliminated Snake Egg! It was about to grow up after {turnToGrow} Turn(s).";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.SnakeBaby;
+		}
 	}
 }

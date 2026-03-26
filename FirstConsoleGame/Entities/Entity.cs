@@ -39,5 +39,6 @@ namespace FirstConsoleGame
 			return player;
 		}
 		public abstract string OnPlayerEnter();
+		public abstract EntityEnum GetEntityEnum();
 	}
 }

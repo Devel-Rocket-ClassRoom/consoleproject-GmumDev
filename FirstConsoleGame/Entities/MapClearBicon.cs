@@ -20,5 +20,9 @@ namespace FirstConsoleGame
 			map.SetClear(true);
 			return "Map Clear, door Opened!!!";
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.MapClearBicon;
+		}
 	}
 }

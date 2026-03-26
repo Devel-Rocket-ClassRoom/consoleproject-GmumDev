@@ -17,5 +17,9 @@ namespace FirstConsoleGame
 			AddTail();
 			AddTail();
 		}
+		public override EntityEnum GetEntityEnum()
+		{
+			return EntityEnum.BigSnake_Head;
+		}
 	}
 }
